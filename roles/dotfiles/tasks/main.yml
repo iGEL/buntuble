@@ -1,7 +1,14 @@
 ---
 - name: Create ~/dev directory
   file: path=/home/{{ ansible_user_id }}/dev state=directory
+
 - name: Clone the dotfiles directory
-  git: > 
+  git: >
     repo=https://github.com/iGEL/dotfiles.git
     dest=/home/{{ ansible_user_id }}/dev/files
+
+- name: Symlink the dotfiles directory
+  file: >
+    src=/home/{{ ansible_user_id }}/dev/files
+    dest=/home/{{ ansible_user_id }}/.dotfiles
+    state=link

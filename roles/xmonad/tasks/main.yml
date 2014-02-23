@@ -1,0 +1,24 @@
+---
+- name: Install xmonad
+  apt: name=xmonad state=latest
+  sudo: yes
+
+- name: symlink the ~/.xmonad
+  file: >
+    src=/home/{{ ansible_user_id }}/dev/files/xmonad
+    dest=/home/{{ ansible_user_id }}/.xmonad
+    state=link
+
+- name: Install xmobar
+  apt: name=xmobar state=latest
+  sudo: yes
+
+- name: symlink the ~/.xmobarrc directory
+  file: >
+    src=/home/{{ ansible_user_id }}/dev/files/xmobarrc
+    dest=/home/{{ ansible_user_id }}/.xmobarrc
+    state=link
+
+- name: Install suckless-tools for dmenu
+  apt: name=suckless-tools state=latest
+  sudo: yes

@@ -5,4 +5,7 @@
   roles:
     - dotfiles
     - vim
+    - zsh
+    - urxvt
+    - xmonad
     - mysql

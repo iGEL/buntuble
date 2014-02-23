@@ -1,0 +1,14 @@
+---
+- name: Install urxvt
+  apt: name=rxvt-unicode state=latest
+  sudo: yes
+
+- name: Strip -noccp option for xrdb out of /usr/sbin/lightdm-session
+  command: sed -i 's/xrdb -nocpp/xrdb/g' /usr/sbin/lightdm-session
+  sudo: yes
+
+- name: symlink the ~/.Xresources
+  file: >
+    src=/home/{{ ansible_user_id }}/dev/files/Xresources
+    dest=/home/{{ ansible_user_id }}/.Xresources
+    state=link
