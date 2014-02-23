@@ -1,0 +1,7 @@
+---
+- name: Create ~/dev directory
+  file: path=/home/{{ ansible_user_id }}/dev state=directory
+- name: Clone the dotfiles directory
+  git: > 
+    repo=https://github.com/iGEL/dotfiles.git
+    dest=/home/{{ ansible_user_id }}/dev/files

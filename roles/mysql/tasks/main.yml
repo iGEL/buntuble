@@ -1,0 +1,8 @@
+---
+- name: Install MySQL Server
+  apt: name=mysql-server state=present
+  sudo: true
+
+- name: Start MySQL Server
+  service: name=mysql state=started enabled=true
+  sudo: true

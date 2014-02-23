@@ -1,0 +1,8 @@
+---
+- name: Installes your development machine
+  hosts: localhost
+
+  roles:
+    - dotfiles
+    - vim
+    - mysql

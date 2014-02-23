@@ -1,0 +1,24 @@
+---
+- name: Install vim
+  apt: name=vim-gnome state=present
+  sudo: yes
+
+- name: symlink the ~/.vimrc
+  file: >
+    src=/home/{{ ansible_user_id }}/dev/files/vimrc
+    dest=/home/{{ ansible_user_id }}/.vimrc
+    state=link
+
+- name: symlink the ~/.vim directory
+  file: >
+    src=/home/{{ ansible_user_id }}/dev/files/vim
+    dest=/home/{{ ansible_user_id }}/.vim
+    state=link
+
+- name: Setup vundle
+  git: >
+    repo=https://github.com/gmarik/vundle.git
+    dest=/home/{{ ansible_user_id }}/.vim/bundle/vundle
+
+- name: vundle install
+  command: /usr/bin/vim +BundleInstall +qall
