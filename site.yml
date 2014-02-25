@@ -3,9 +3,16 @@
   hosts: localhost
 
   roles:
+    - test-sudo
     - dotfiles
     - vim
     - zsh
     - urxvt
     - xmonad
+    - ruby
+    - chruby
+    - ntp
     - mysql
+    - elasticsearch
+    - firefox
+    - wimdu # This one is not in the Repo. Ask me, if you need it

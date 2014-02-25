@@ -2,12 +2,21 @@
 - name: Install Zsh
   apt: name=zsh state=latest
   sudo: yes
+  tags: [zsh]
 
 - name: Set Zsh as default for the current user
-  command: chsh -s /bin/zsh
+  command: chsh -s /bin/zsh {{ ansible_user_id }}
   sudo: yes
+  tags: [zsh]
+
+- name: Setup /etc/zsh/zshenv
+  copy: src=zshenv dest=/etc/zsh/zshenv
+  sudo: yes
+  tags: [zsh]
 
 - name: Symlink ~/.zshrc
   file: >
     src=/home/{{ ansible_user_id }}/dev/files/zshrc
     dest=/home/{{ ansible_user_id }}/.zshrc
+    state=link
+  tags: [zsh]

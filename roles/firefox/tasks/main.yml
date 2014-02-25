@@ -1,0 +1,18 @@
+---
+- name: Get pentadactyl status
+  shell: ls ~/.mozilla/firefox/*.default/extensions/pentadactyl@dactyl.googlecode.com.xpi
+  register: pentadactyl_status
+  ignore_errors: yes
+  tags: [firefox]
+
+- name: Download pentadactyl
+  get_url: >
+    url=http://dactyl.googlecode.com/files/pentadactyl-{{pentadactyl_version}}.xpi
+    dest=/home/{{ansible_user_id}}/Downloads/pentadactyl-{{pentadactyl_version}}.xpi
+  tags: [firefox]
+  when: "pentadactyl_status.stdout.find('pentadactyl') == -1"
+
+- name: Install pentadactyl
+  command: /usr/bin/firefox -silent /home/{{ansible_user_id}}/Downloads/pentadactyl-{{pentadactyl_version}}.xpi
+  tags: [firefox]
+  when: "pentadactyl_status.stdout.find('pentadactyl') == -1"

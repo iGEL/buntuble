@@ -1,0 +1,20 @@
+---
+- name: Install ruby
+  apt: name=ruby2.0 state=latest
+  sudo: yes
+  tags: [ruby]
+
+- name: Install required libs to compile ruby
+  apt: pkg={{item}} state=latest
+  sudo: yes
+  with_items:
+    - gawk
+    - libreadline6-dev
+    - libssl-dev
+    - libyaml-dev
+    - libsqlite3-dev
+    - sqlite3
+    - libgdbm-dev
+    - libncurses5-dev
+    - libtool
+    - bison

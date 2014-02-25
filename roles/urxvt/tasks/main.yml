@@ -12,3 +12,19 @@
     src=/home/{{ ansible_user_id }}/dev/files/Xresources
     dest=/home/{{ ansible_user_id }}/.Xresources
     state=link
+
+- name: set urxvt as default terminal emulator
+  command: sudo update-alternatives --set x-terminal-emulator /usr/bin/urxvt
+  sudo: yes
+
+- name: Install keyboard-select
+  get_url: url=https://github.com/muennich/urxvt-perls/raw/c05d319ba67c280940117d47e8f1a1ddc1b91a74/keyboard-select dest=/usr/lib/urxvt/perl/keyboard-select
+  sudo: yes
+
+- name: Install url-select
+  get_url: url=https://github.com/muennich/urxvt-perls/raw/6481d92137930291ce37c804213d9e9e6e984c3d/url-select dest=/usr/lib/urxvt/perl/url-select
+  sudo: yes
+
+- name: Install font-size
+  get_url: url=https://github.com/majutsushi/urxvt-font-size/raw/77fb033e542c48740173b2b2eb92a94149ddbc21/font-size dest=/usr/lib/urxvt/perl/font-size
+  sudo: yes

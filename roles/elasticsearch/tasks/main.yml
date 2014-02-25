@@ -1,0 +1,26 @@
+---
+- name: Install Java (openjdk-7-jre-headless)
+  apt: name=openjdk-7-jre-headless state=latest
+  sudo: yes
+  tags: [elasticsearch]
+
+- name: Get installed elasticsearch version
+  shell: apt-cache policy elasticsearch
+  register: elasticsearch_apt_policy
+  tags: [elasticsearch]
+
+- name: Download elasticsearch
+  get_url: url=https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-{{elasticsearch_version}}.deb dest=/home/{{ansible_user_id}}/Downloads/elasticsearch-{{elasticsearch_version}}.deb
+  when: "elasticsearch_apt_policy.stdout.find('Installed: {{elasticsearch_version}}') == -1"
+  tags: [elasticsearch]
+
+- name: Install elasticsearch
+  command: /usr/bin/dpkg -i /home/{{ansible_user_id}}/Downloads/elasticsearch-{{elasticsearch_version}}.deb
+  sudo: yes
+  when: "elasticsearch_apt_policy.stdout.find('Installed: {{elasticsearch_version}}') == -1"
+  tags: [elasticsearch]
+
+- name: Start elasticsearch
+  service: name=elasticsearch state=started
+  sudo: yes
+  tags: [elasticsearch]

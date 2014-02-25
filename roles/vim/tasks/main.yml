@@ -1,6 +1,6 @@
 ---
 - name: Install vim
-  apt: name=vim-gnome state=present
+  apt: name=vim-gnome state=latest
   sudo: yes
 
 - name: symlink the ~/.vimrc

@@ -1,0 +1,78 @@
+---
+- name: Download chruby
+  get_url:
+    url: https://github.com/postmodern/chruby/archive/v{{chruby_version}}.tar.gz
+    dest: /home/{{ansible_user_id}}/Downloads/chruby-{{chruby_version}}.tar.gz
+  tags: [chruby]
+
+- name: Unpack chruby
+  command: /bin/tar -xzf /home/{{ansible_user_id}}/Downloads/chruby-{{chruby_version}}.tar.gz chdir=/home/{{ansible_user_id}}/Downloads/ creates=/home/{{ansible_user_id}}/Downloads/chruby-{{chruby_version}}
+  tags: [chruby]
+
+- name: Install chruby
+  command: make install chdir=/home/{{ansible_user_id}}/Downloads/chruby-{{chruby_version}} creates=/usr/local/share/chruby/chruby.sh
+  tags: [chruby]
+  sudo: yes
+
+- name: Setup profile.d
+  tags: [chruby]
+  sudo: yes
+  copy: src=chruby.sh dest=/etc/profile.d/chruby.sh mode=755
+
+- name: Setup ~/.rubies
+  file: >
+    dest=/home/{{ansible_user_id}}/.rubies
+    state=directory
+  tags: [chruby]
+
+- name: Install required packages
+  apt: name={{item}} state=latest
+  sudo: yes
+  with_items:
+    - build-essential
+    - libffi-dev
+    - libgdbm-dev
+    - libncurses5-dev
+    - libreadline-dev
+    - libssl-dev
+    - libyaml-dev
+    - zlib1g-dev
+  tags: [chruby]
+
+- name: Download Ruby 2.0.0
+  get_url:
+    url: http://cache.ruby-lang.org/pub/ruby/2.0/ruby-2.0.0-p451.tar.bz2
+    dest: /home/{{ansible_user_id}}/Downloads/ruby-2.0.0-p451.tar.bz2
+    sha256sum: 5bf8a1c7616286b9dbc962912c3f58e67bc3a70306ca90b0882ef0bd442e02f5
+  tags: [chruby]
+
+- name: Unpack Ruby 2.0.0
+  command: tar xjf /home/{{ansible_user_id}}/Downloads/ruby-2.0.0-p451.tar.bz2 chdir=/home/{{ansible_user_id}}/Downloads/ creates=/home/{{ansible_user_id}}/Downloads/ruby-2.0.0-p451
+  tags: [chruby]
+
+- name: Install Ruby 2.0.0
+  command: "{{item}} chdir=/home/{{ansible_user_id}}/Downloads/ruby-2.0.0-p451 creates=/home/{{ansible_user_id}}/.rubies/2.0.0"
+  with_items:
+    - ./configure --prefix=/home/{{ansible_user_id}}/.rubies/2.0.0
+    - make
+    - make install
+  tags: [chruby]
+
+- name: Download Ruby 2.1.1
+  get_url:
+    url: http://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.1.tar.bz2
+    dest: /home/{{ansible_user_id}}/Downloads/ruby-2.1.1.tar.bz2
+    sha256sum: 96aabab4dd4a2e57dd0d28052650e6fcdc8f133fa8980d9b936814b1e93f6cfc
+  tags: [chruby]
+
+- name: Unpack Ruby 2.1.1
+  command: tar xjf /home/{{ansible_user_id}}/Downloads/ruby-2.1.1.tar.bz2 chdir=/home/{{ansible_user_id}}/Downloads/ creates=/home/{{ansible_user_id}}/Downloads/ruby-2.1.1
+  tags: [chruby]
+
+- name: Install Ruby 2.1.1
+  command: "{{item}} chdir=/home/{{ansible_user_id}}/Downloads/ruby-2.1.1 creates=/home/{{ansible_user_id}}/.rubies/2.1.1"
+  with_items:
+    - ./configure --prefix=/home/{{ansible_user_id}}/.rubies/2.1.1
+    - make
+    - make install
+  tags: [chruby]
