@@ -1,0 +1,4 @@
+---
+-
+  name: Refresh font cache
+  command: /usr/bin/fc-cache -vf /home/{{ansible_user_id}}/.fonts

@@ -2,23 +2,36 @@
 - name: Install vim
   apt: name=vim-gnome state=latest
   sudo: yes
+  tags: [vim]
+
+-
+  name: Install ag
+  apt:
+    name: silversearcher-ag
+    state: latest
+  sudo: yes
+  tags: [vim]
 
 - name: symlink the ~/.vimrc
   file: >
     src=/home/{{ ansible_user_id }}/dev/files/vimrc
     dest=/home/{{ ansible_user_id }}/.vimrc
     state=link
+  tags: [vim]
 
 - name: symlink the ~/.vim directory
   file: >
     src=/home/{{ ansible_user_id }}/dev/files/vim
     dest=/home/{{ ansible_user_id }}/.vim
     state=link
+  tags: [vim]
 
 - name: Setup vundle
   git: >
     repo=https://github.com/gmarik/vundle.git
     dest=/home/{{ ansible_user_id }}/.vim/bundle/vundle
+  tags: [vim]
 
 - name: vundle install
   command: /usr/bin/vim +BundleInstall +qall
+  tags: [vim]
