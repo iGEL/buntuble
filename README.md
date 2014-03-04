@@ -1,8 +1,21 @@
 buntuble
 ========
 
-Ansible scripts to setup my dev machine. I'm currently running Ubuntu 13.10
+Ansible scripts to setup my dev machine.
 
+I'm currently running Ubuntu 13.10 and Ansible 1.5. As 
+[mentioned in the installation guide](http://docs.ansible.com/intro_installation.html#latest-releases-via-apt-ubuntu),
+I installed it from the source using `make deb`.
+
+You probably just want to copy paste the stuff you like (you also could edit the `site.yml` if you use my stuff
+mostly as it is), but I run it like this:
+```
+ansible-playbook -i inventory site.yml -K
+```
+Or, if I just want to run certain parts:
+```
+ansible-playbook -i inventory site.yml -K --tags=elasticsearch
+```
 
 License (MIT)
 -------------
