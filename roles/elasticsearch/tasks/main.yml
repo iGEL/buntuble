@@ -19,8 +19,4 @@
   sudo: yes
   when: "elasticsearch_apt_policy.stdout.find('Installed: {{elasticsearch_version}}') == -1"
   tags: [elasticsearch]
-
-- name: Start elasticsearch
-  service: name=elasticsearch state=started
-  sudo: yes
-  tags: [elasticsearch]
+  notify: restart elasticsearch
