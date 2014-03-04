@@ -4,7 +4,8 @@ buntuble
 Ansible scripts to setup my dev machine. I'm currently running Ubuntu 13.10
 
 
-== License (MIT) ==
+License (MIT)
+-------------
 
 Copyright (C) 2014 Johannes Barre
 
