@@ -3,7 +3,7 @@ buntuble
 
 Ansible scripts to setup my dev machine.
 
-I'm currently running Ubuntu 13.10 and Ansible 1.5. As 
+I'm currently running Ubuntu 14.04 and Ansible 1.5. As 
 [mentioned in the installation guide](http://docs.ansible.com/intro_installation.html#latest-releases-via-apt-ubuntu),
 I installed it from the source using `make deb`.
 
