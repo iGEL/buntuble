@@ -28,10 +28,10 @@
 
 - name: Setup vundle
   git: >
-    repo=https://github.com/gmarik/vundle.git
-    dest=/home/{{ ansible_user_id }}/.vim/bundle/vundle
+    repo=https://github.com/gmarik/Vundle.vim.git
+    dest=/home/{{ ansible_user_id }}/.vim/bundle/Vundle.vim
   tags: [vim]
 
 - name: vundle install
-  command: /usr/bin/vim +BundleInstall +qall
+  command: /usr/bin/vim -u ~/dev/files/vundle.vimrc +PluginInstall +qall
   tags: [vim]

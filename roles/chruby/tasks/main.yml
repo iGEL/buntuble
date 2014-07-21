@@ -53,7 +53,7 @@
 - name: Install Ruby 2.1.1
   command: "{{item}} chdir=/home/{{ansible_user_id}}/Downloads/ruby-2.1.1 creates=/home/{{ansible_user_id}}/.rubies/2.1.1"
   with_items:
-    - ./configure --prefix=/home/{{ansible_user_id}}/.rubies/2.1.1
+    - ./configure --prefix=/home/{{ansible_user_id}}/.rubies/2.1.1 --with-readline-dir=/usr/lib/x86_64-linux-gnu/libreadline.so
     - make
     - make install
   tags: [chruby]
