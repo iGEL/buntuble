@@ -1,8 +1,10 @@
 ---
 - name: Install MySQL Server
-  apt: name=mysql-server state=present
+  apt: name=mysql-server-5.6 state=latest
   sudo: true
+  tags: [mysql]
 
 - name: Start MySQL Server
   service: name=mysql state=started enabled=true
   sudo: true
+  tags: [mysql]
