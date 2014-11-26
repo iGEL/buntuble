@@ -39,25 +39,6 @@
     - zlib1g-dev
   tags: [chruby]
 
-- name: Download Ruby 2.1.1
-  get_url:
-    url: ftp://ftp.fu-berlin.de/unix/languages/ruby/2.1/ruby-2.1.1.tar.bz2
-    dest: /home/{{ansible_user_id}}/Downloads/ruby-2.1.1.tar.bz2
-    sha256sum: 96aabab4dd4a2e57dd0d28052650e6fcdc8f133fa8980d9b936814b1e93f6cfc
-  tags: [chruby]
-
-- name: Unpack Ruby 2.1.1
-  command: tar xjf /home/{{ansible_user_id}}/Downloads/ruby-2.1.1.tar.bz2 chdir=/home/{{ansible_user_id}}/Downloads/ creates=/home/{{ansible_user_id}}/Downloads/ruby-2.1.1
-  tags: [chruby]
-
-- name: Install Ruby 2.1.1
-  command: "{{item}} chdir=/home/{{ansible_user_id}}/Downloads/ruby-2.1.1 creates=/home/{{ansible_user_id}}/.rubies/2.1.1"
-  with_items:
-    - ./configure --prefix=/home/{{ansible_user_id}}/.rubies/2.1.1 --with-readline-dir=/usr/lib/x86_64-linux-gnu/libreadline.so
-    - make
-    - make install
-  tags: [chruby]
-
 - name: Download Ruby 2.1.4
   get_url:
     url: ftp://ftp.fu-berlin.de/unix/languages/ruby/2.1/ruby-2.1.4.tar.xz
@@ -73,6 +54,25 @@
   command: "{{item}} chdir=/home/{{ansible_user_id}}/Downloads/ruby-2.1.4 creates=/home/{{ansible_user_id}}/.rubies/2.1.4"
   with_items:
     - ./configure --prefix=/home/{{ansible_user_id}}/.rubies/2.1.4
+    - make
+    - make install
+  tags: [chruby]
+
+- name: Download Ruby 2.1.5
+  get_url:
+    url: ftp://ftp.fu-berlin.de/unix/languages/ruby/2.1/ruby-2.1.5.tar.bz2
+    dest: /home/{{ansible_user_id}}/Downloads/ruby-2.1.5.tar.bz2
+    sha256sum: 0241b40f1c731cb177994a50b854fb7f18d4ad04dcefc18acc60af73046fb0a9
+  tags: [chruby]
+
+- name: Unpack Ruby 2.1.5
+  command: tar xjf /home/{{ansible_user_id}}/Downloads/ruby-2.1.5.tar.bz2 chdir=/home/{{ansible_user_id}}/Downloads/ creates=/home/{{ansible_user_id}}/Downloads/ruby-2.1.5
+  tags: [chruby]
+
+- name: Install Ruby 2.1.5
+  command: "{{item}} chdir=/home/{{ansible_user_id}}/Downloads/ruby-2.1.5 creates=/home/{{ansible_user_id}}/.rubies/2.1.5"
+  with_items:
+    - ./configure --prefix=/home/{{ansible_user_id}}/.rubies/2.1.5
     - make
     - make install
   tags: [chruby]
