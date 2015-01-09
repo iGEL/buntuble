@@ -1,0 +1,19 @@
+---
+- name: Install emacs
+  apt: name=emacs state=latest
+  sudo: yes
+  tags: [emacs]
+
+- name: symlink the ~/.emacs
+  file: >
+    src=/home/{{ ansible_user_id }}/dev/files/emacs
+    dest=/home/{{ ansible_user_id }}/.emacs
+    state=link
+  tags: [emacs]
+
+- name: symlink the ~/.emacs.d directory
+  file: >
+    src=/home/{{ ansible_user_id }}/dev/files/emacs.d
+    dest=/home/{{ ansible_user_id }}/.emacs.d
+    state=link
+  tags: [emacs]

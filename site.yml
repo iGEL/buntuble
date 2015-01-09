@@ -6,6 +6,7 @@
     - test-sudo
     - dotfiles
     - vim
+    - emacs
     - zsh
     - urxvt
     - xmonad
