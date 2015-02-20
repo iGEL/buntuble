@@ -1,4 +1,4 @@
 ---
-elasticsearch_version: 1.0.1
+elasticsearch_version: 1.4.1
 pentadactyl_version: 20140224
 chruby_version: 0.3.8
