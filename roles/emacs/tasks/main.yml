@@ -1,0 +1,40 @@
+---
+- name: Install emacs 24
+  apt:
+    name: emacs24
+    state: latest
+  sudo: yes
+  tags: [emacs]
+
+- name: Install spacemacs
+  git:
+    repo: https://github.com/syl20bnr/spacemacs
+    dest: /home/{{ ansible_user_id }}/.emacs.d
+    recursive: yes
+    accept_hostkey: yes
+    force: yes
+  tags: [emacs]
+
+- name: Update spacemacs submodules
+  command: git submodule update chdir=/home/{{ ansible_user_id }}/.emacs.d/
+  tags: [emacs]
+
+- name: Symlink ~/.spacemacs
+  file:
+    src: /home/{{ ansible_user_id }}/dev/files/emacs/spacemacs
+    dest: /home//{{ ansible_user_id }}/.spacemacs
+    state: link
+  tags: [emacs]
+
+- name: Remove ~/.emacs.d/private
+  file:
+    dest: /home//{{ ansible_user_id }}/.emacs.d/private
+    state: absent
+  tags: [emacs]
+
+- name: Symlink ~/.emacs.d/private
+  file:
+    src: /home/{{ ansible_user_id }}/dev/files/emacs/private
+    dest: /home//{{ ansible_user_id }}/.emacs.d/private
+    state: link
+  tags: [emacs]
