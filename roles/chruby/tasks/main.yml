@@ -39,25 +39,6 @@
     - zlib1g-dev
   tags: [chruby]
 
-- name: Download Ruby 2.1.4
-  get_url:
-    url: ftp://ftp.fu-berlin.de/unix/languages/ruby/2.1/ruby-2.1.4.tar.xz
-    dest: /home/{{ansible_user_id}}/Downloads/ruby-2.1.4.tar.xz
-    sha256sum: e1cc5cbbcaa8644e282f04763d96057ddd6f443338a5019200e8726273e84fcf
-  tags: [chruby]
-
-- name: Unpack Ruby 2.1.4
-  command: tar xJf /home/{{ansible_user_id}}/Downloads/ruby-2.1.4.tar.xz chdir=/home/{{ansible_user_id}}/Downloads/ creates=/home/{{ansible_user_id}}/Downloads/ruby-2.1.4
-  tags: [chruby]
-
-- name: Install Ruby 2.1.4
-  command: "{{item}} chdir=/home/{{ansible_user_id}}/Downloads/ruby-2.1.4 creates=/home/{{ansible_user_id}}/.rubies/2.1.4"
-  with_items:
-    - ./configure --prefix=/home/{{ansible_user_id}}/.rubies/2.1.4
-    - make
-    - make install
-  tags: [chruby]
-
 - name: Download Ruby 2.1.5
   get_url:
     url: ftp://ftp.fu-berlin.de/unix/languages/ruby/2.1/ruby-2.1.5.tar.bz2
@@ -73,6 +54,25 @@
   command: "{{item}} chdir=/home/{{ansible_user_id}}/Downloads/ruby-2.1.5 creates=/home/{{ansible_user_id}}/.rubies/2.1.5"
   with_items:
     - ./configure --prefix=/home/{{ansible_user_id}}/.rubies/2.1.5
+    - make
+    - make install
+  tags: [chruby]
+
+- name: Download Ruby 2.2.2
+  get_url:
+    url: ftp://ftp.fu-berlin.de/unix/languages/ruby/2.2/ruby-2.2.2.tar.xz
+    dest: /home/{{ansible_user_id}}/Downloads/ruby-2.2.2.tar.xz
+    sha256sum: f033b5d08ab57083e48c1d81bcd7399967578c370b664da90e12a32891424462
+  tags: [chruby]
+
+- name: Unpack Ruby 2.2.2
+  command: tar xJf /home/{{ansible_user_id}}/Downloads/ruby-2.2.2.tar.xz chdir=/home/{{ansible_user_id}}/Downloads/ creates=/home/{{ansible_user_id}}/Downloads/ruby-2.2.2
+  tags: [chruby]
+
+- name: Install Ruby 2.2.2
+  command: "{{item}} chdir=/home/{{ansible_user_id}}/Downloads/ruby-2.2.2 creates=/home/{{ansible_user_id}}/.rubies/2.2.2"
+  with_items:
+    - ./configure --prefix=/home/{{ansible_user_id}}/.rubies/2.2.2
     - make
     - make install
   tags: [chruby]
