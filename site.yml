@@ -11,8 +11,5 @@
     - urxvt
     - xmonad
     - ruby
-    - chruby
     - ntp
-    - mysql
-    - elasticsearch
     - firefox
