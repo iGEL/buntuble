@@ -58,21 +58,21 @@
     - make install
   tags: [chruby]
 
-- name: Download Ruby 2.2.2
+- name: Download Ruby 2.2.3
   get_url:
-    url: ftp://ftp.fu-berlin.de/unix/languages/ruby/2.2/ruby-2.2.2.tar.xz
-    dest: /home/{{ansible_user_id}}/Downloads/ruby-2.2.2.tar.xz
-    sha256sum: f033b5d08ab57083e48c1d81bcd7399967578c370b664da90e12a32891424462
+    url: ftp://ftp.fu-berlin.de/unix/languages/ruby/2.2/ruby-2.2.3.tar.xz
+    dest: /home/{{ansible_user_id}}/Downloads/ruby-2.2.3.tar.xz
+    sha256sum: c6ec90e9ed018e6d9a578fc93755d8565839908d5796809e1aecd1798c7ea8a7
   tags: [chruby]
 
-- name: Unpack Ruby 2.2.2
-  command: tar xJf /home/{{ansible_user_id}}/Downloads/ruby-2.2.2.tar.xz chdir=/home/{{ansible_user_id}}/Downloads/ creates=/home/{{ansible_user_id}}/Downloads/ruby-2.2.2
+- name: Unpack Ruby 2.2.3
+  command: tar xJf /home/{{ansible_user_id}}/Downloads/ruby-2.2.3.tar.xz chdir=/home/{{ansible_user_id}}/Downloads/ creates=/home/{{ansible_user_id}}/Downloads/ruby-2.2.3
   tags: [chruby]
 
-- name: Install Ruby 2.2.2
-  command: "{{item}} chdir=/home/{{ansible_user_id}}/Downloads/ruby-2.2.2 creates=/home/{{ansible_user_id}}/.rubies/2.2.2"
+- name: Install Ruby 2.2.3
+  command: "{{item}} chdir=/home/{{ansible_user_id}}/Downloads/ruby-2.2.3 creates=/home/{{ansible_user_id}}/.rubies/2.2.3"
   with_items:
-    - ./configure --prefix=/home/{{ansible_user_id}}/.rubies/2.2.2
+    - ./configure --prefix=/home/{{ansible_user_id}}/.rubies/2.2.3
     - make
     - make install
   tags: [chruby]
