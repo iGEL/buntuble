@@ -1,6 +1,6 @@
 ---
 - name: Install ruby
-  apt: name=ruby2.0 state=latest
+  apt: name=ruby2.1 state=latest
   sudo: yes
   tags: [ruby]
 
