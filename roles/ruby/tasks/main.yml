@@ -2,7 +2,7 @@
 - name: Install ruby
   apt: name=ruby2.1 state=latest
   sudo: yes
-  tags: [ruby]
+  tags: [ruby, sudo]
 
 - name: Install required libs to compile ruby
   apt: pkg={{item}} state=latest
@@ -18,3 +18,4 @@
     - libncurses5-dev
     - libtool
     - bison
+  tags: [ruby, sudo]

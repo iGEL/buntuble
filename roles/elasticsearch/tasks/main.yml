@@ -2,7 +2,7 @@
 - name: Install Java (openjdk-7-jre-headless)
   apt: name=openjdk-7-jre-headless state=latest
   sudo: yes
-  tags: [elasticsearch]
+  tags: [elasticsearch, sudo]
 
 - name: Get installed elasticsearch version
   shell: apt-cache policy elasticsearch
@@ -18,7 +18,7 @@
   command: /usr/bin/dpkg -i /home/{{ansible_user_id}}/Downloads/elasticsearch-{{elasticsearch_version}}.deb
   sudo: yes
   when: "elasticsearch_apt_policy.stdout.find('Installed: {{elasticsearch_version}}') == -1"
-  tags: [elasticsearch]
+  tags: [elasticsearch, sudo]
   notify: restart elasticsearch
 
 - name: Disable cluster
@@ -27,5 +27,5 @@
     line: 'discovery.zen.ping.multicast.enabled: false'
     regexp: '# discovery\.zen\.ping\.multicast\.enabled: false'
   sudo: yes
-  tags: [elasticsearch]
+  tags: [elasticsearch, sudo]
   notify: restart elasticsearch

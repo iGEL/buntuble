@@ -4,7 +4,7 @@
     name: emacs24
     state: latest
   sudo: yes
-  tags: [emacs]
+  tags: [emacs, sudo]
 
 - name: Install spacemacs
   git:

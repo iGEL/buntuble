@@ -11,11 +11,11 @@
 
 - name: Install chruby
   command: make install chdir=/home/{{ansible_user_id}}/Downloads/chruby-{{chruby_version}} creates=/usr/local/share/chruby/chruby.sh
-  tags: [chruby]
+  tags: [chruby, sudo]
   sudo: yes
 
 - name: Setup profile.d
-  tags: [chruby]
+  tags: [chruby, sudo]
   sudo: yes
   copy: src=chruby.sh dest=/etc/profile.d/chruby.sh mode=755
 
@@ -37,7 +37,7 @@
     - libssl-dev
     - libyaml-dev
     - zlib1g-dev
-  tags: [chruby]
+  tags: [chruby, sudo]
 
 - name: Download Ruby 2.1.5
   get_url:

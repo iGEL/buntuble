@@ -2,6 +2,7 @@
 - name: Install xmonad
   apt: name=xmonad state=latest
   sudo: yes
+  tags: [sudo]
 
 - name: symlink the ~/.xmonad
   file: >
@@ -12,6 +13,7 @@
 - name: Install xmobar
   apt: name=xmobar state=latest
   sudo: yes
+  tags: [sudo]
 
 - name: symlink the ~/.xmobarrc directory
   file: >
@@ -22,3 +24,4 @@
 - name: Install suckless-tools for dmenu
   apt: name=suckless-tools state=latest
   sudo: yes
+  tags: [sudo]

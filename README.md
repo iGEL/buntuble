@@ -3,24 +3,29 @@ buntuble
 
 Ansible scripts to setup my dev machine.
 
-I'm currently running Ubuntu 14.04 and Ansible 1.5. As 
+I'm currently running Ubuntu 14.04 and Ansible 1.5. As
 [mentioned in the installation guide](http://docs.ansible.com/intro_installation.html#latest-releases-via-apt-ubuntu),
 I installed it from the source using `make deb`.
 
 You probably just want to copy paste the stuff you like (you also could edit the `site.yml` if you use my stuff
 mostly as it is), but I run it like this:
-```
+```sh
 ansible-playbook -i inventory site.yml -K
 ```
 Or, if I just want to run certain parts:
-```
+```sh
 ansible-playbook -i inventory site.yml -K --tags=elasticsearch
+```
+
+If you already have everything installed and want to run things without sudo:
+```sh
+ansible-playbook -i --skip-tags=sudo inventory site.yml
 ```
 
 License (MIT)
 -------------
 
-Copyright (C) 2014 Johannes Barre
+Copyright (C) 2014-15 Johannes Barre
 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated

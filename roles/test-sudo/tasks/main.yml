@@ -2,3 +2,4 @@
 - name: Test sudo password
   command: /bin/ls
   sudo: yes
+  tags: [sudo]

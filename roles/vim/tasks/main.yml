@@ -2,7 +2,7 @@
 - name: Install vim
   apt: name=vim-gnome state=latest
   sudo: yes
-  tags: [vim]
+  tags: [vim, sudo]
 
 -
   name: Install ag
@@ -10,7 +10,7 @@
     name: silversearcher-ag
     state: latest
   sudo: yes
-  tags: [vim]
+  tags: [vim, sudo]
 
 - name: symlink the ~/.vimrc
   file: >
