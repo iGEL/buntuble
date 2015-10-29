@@ -5,14 +5,11 @@
   roles:
     - test-sudo
     - dotfiles
-    - neovim
-    - emacs
+    - ntp
     - zsh
     - urxvt
     - xmonad
+    - neovim
     - ruby
     - chruby
-    - ntp
-    - mysql
-    - elasticsearch
     - firefox
