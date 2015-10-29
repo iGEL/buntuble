@@ -5,7 +5,7 @@
   roles:
     - test-sudo
     - dotfiles
-    - vim
+    - neovim
     - emacs
     - zsh
     - urxvt

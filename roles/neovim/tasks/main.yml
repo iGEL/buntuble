@@ -1,0 +1,44 @@
+---
+- name: Add PPA
+  apt_repository: repo='ppa:neovim-ppa/unstable'
+  sudo: yes
+  tags: [neovim, sudo]
+
+- name: Setup alternatives
+  alternatives: name={{item}} path=/usr/bin/nvim
+  with_items:
+    - vi
+    - vim
+    - editor
+  sudo: yes
+  tags: [neovim, sudo]
+
+- name: Install Neovim
+  apt: name=neovim state=latest
+  sudo: yes
+  tags: [neovim, sudo]
+
+-
+  name: Install ag
+  apt:
+    name: silversearcher-ag
+    state: latest
+  sudo: yes
+  tags: [neovim, sudo]
+
+- name: symlink the ~/.config/nvim directory
+  file: >
+    src=/home/{{ ansible_user_id }}/dev/files/nvim
+    dest=/home/{{ ansible_user_id }}/.config/nvim
+    state=link
+  tags: [neovim]
+
+- name: Setup vundle
+  git: >
+    repo=https://github.com/gmarik/Vundle.vim.git
+    dest=/home/{{ ansible_user_id }}/.config/nvim/bundle/Vundle.vim
+  tags: [neovim]
+
+- name: vundle install
+  command: /usr/bin/vim -u ~/dev/files/nvim/install_vundle.vimrc +PluginInstall +qall
+  tags: [neovim]
