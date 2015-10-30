@@ -19,7 +19,7 @@ ansible-playbook -i inventory site.yml -K --tags=elasticsearch
 
 If you already have everything installed and want to run things without sudo:
 ```sh
-ansible-playbook -i --skip-tags=sudo inventory site.yml
+ansible-playbook -i inventory site.yml --skip-tags=sudo
 ```
 
 License (MIT)
