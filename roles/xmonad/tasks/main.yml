@@ -10,16 +10,19 @@
     dest=/home/{{ ansible_user_id }}/.xmonad
     state=link
 
-- name: Install xmobar
-  apt: name=xmobar state=latest
+- name: Install taffybar dependencies
+  apt: name={{item}} state=latest
+  with_items:
+    - libxml2-dev
+    - libghc-gtk-dev
   sudo: yes
   tags: [sudo]
 
-- name: symlink the ~/.xmobarrc directory
-  file: >
-    src=/home/{{ ansible_user_id }}/dev/files/xmobarrc
-    dest=/home/{{ ansible_user_id }}/.xmobarrc
-    state=link
+- name: Update cabal
+  command: cabal update
+
+- name: Install taffybar
+  command: cabal install taffybar
 
 - name: Install suckless-tools for dmenu
   apt: name=suckless-tools state=latest
