@@ -2,29 +2,40 @@
 - name: Install xmonad
   apt: name=xmonad state=latest
   sudo: yes
-  tags: [sudo]
+  tags: [xmonad, sudo]
 
 - name: symlink the ~/.xmonad
   file: >
     src=/home/{{ ansible_user_id }}/dev/files/xmonad
     dest=/home/{{ ansible_user_id }}/.xmonad
     state=link
+  tags: [xmonad]
 
 - name: Install taffybar dependencies
   apt: name={{item}} state=latest
   with_items:
     - libxml2-dev
     - libghc-gtk-dev
+    - gtk2hs-buildtools
   sudo: yes
-  tags: [sudo]
+  tags: [xmonad, sudo]
 
 - name: Update cabal
   command: cabal update
+  tags: [xmonad]
 
 - name: Install taffybar
   command: cabal install taffybar
+  tags: [xmonad]
+
+- name: symlink ~/.config/taffybar
+  file: >
+    src=/home/{{ ansible_user_id }}/dev/files/taffybar
+    dest=/home/{{ ansible_user_id }}/.config/taffybar
+    state=link
+  tags: [xmonad]
 
 - name: Install suckless-tools for dmenu
   apt: name=suckless-tools state=latest
   sudo: yes
-  tags: [sudo]
+  tags: [xmonad, sudo]
