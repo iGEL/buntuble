@@ -3,7 +3,7 @@ buntuble
 
 Ansible scripts to setup my dev machine.
 
-I'm currently running Ubuntu 14.04 and Ansible 1.5. As
+As of Jan 2016 I'm currently running Ubuntu 15.10 and Ansible 1.9. As
 [mentioned in the installation guide](http://docs.ansible.com/intro_installation.html#latest-releases-via-apt-ubuntu),
 I installed it from the source using `make deb`.
 
@@ -25,7 +25,7 @@ ansible-playbook -i inventory site.yml --skip-tags=sudo
 License (MIT)
 -------------
 
-Copyright (C) 2014-15 Johannes Barre
+Copyright (C) 2014-16 Johannes Barre
 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
