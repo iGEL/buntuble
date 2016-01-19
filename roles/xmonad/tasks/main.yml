@@ -39,3 +39,15 @@
   apt: name=suckless-tools state=latest
   sudo: yes
   tags: [xmonad, sudo]
+
+- name: Install feh for background images
+  apt: name=feh state=latest
+  sudo: yes
+  tags: [xmonad, sudo]
+
+- name: symlink ~/.xinitrc
+  file: >
+    src=/home/{{ ansible_user_id }}/dev/files/xinitrc
+    dest=/home/{{ ansible_user_id }}/.xinitrc
+    state=link
+  tags: [xmonad]
