@@ -13,6 +13,9 @@ sudo apt install git ansible
 git clone git@github.com:iGEL/buntuble.git
 ```
 
+Usage
+-----
+
 You probably just want to copy paste the stuff you like (you also could edit the `site.yml` if you use my stuff
 mostly as it is), but I run it like this:
 ```sh
