@@ -4,11 +4,6 @@
   become: yes
   tags: [urxvt, sudo]
 
-- name: Strip -noccp option for xrdb out of /usr/sbin/lightdm-session
-  command: sed -i 's/xrdb -nocpp/xrdb/g' /usr/sbin/lightdm-session
-  become: yes
-  tags: [urxvt, sudo]
-
 - name: symlink the ~/.Xresources
   file: >
     src=/home/{{ ansible_user_id }}/dev/files/Xresources
