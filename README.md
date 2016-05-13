@@ -3,9 +3,15 @@ buntuble
 
 Ansible scripts to setup my dev machine.
 
-As of Jan 2016 I'm currently running Ubuntu 15.10 and Ansible 1.9. As
-[mentioned in the installation guide](http://docs.ansible.com/intro_installation.html#latest-releases-via-apt-ubuntu),
-I installed it from the source using `make deb`.
+As of May 2016 I'm currently running Ubuntu 16.04 and Ansible 2.0.
+
+Installation
+------------
+
+```sh
+sudo apt install git ansible
+git clone git@github.com:iGEL/buntuble.git
+```
 
 You probably just want to copy paste the stuff you like (you also could edit the `site.yml` if you use my stuff
 mostly as it is), but I run it like this:
