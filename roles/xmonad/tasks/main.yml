@@ -20,6 +20,11 @@
   become: yes
   tags: [xmonad, sudo]
 
+- name: Install cabal
+  apt: name=cabal-install state=latest
+  become: yes
+  tags: [xmonad, sudo]
+
 - name: Update cabal
   command: cabal update
   tags: [xmonad]
