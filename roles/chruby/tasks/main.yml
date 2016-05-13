@@ -12,11 +12,11 @@
 - name: Install chruby
   command: make install chdir=/home/{{ansible_user_id}}/Downloads/chruby-{{chruby_version}} creates=/usr/local/share/chruby/chruby.sh
   tags: [chruby, sudo]
-  sudo: yes
+  become: yes
 
 - name: Setup profile.d
   tags: [chruby, sudo]
-  sudo: yes
+  become: yes
   copy: src=chruby.sh dest=/etc/profile.d/chruby.sh mode=755
 
 - name: Setup ~/.rubies
@@ -27,7 +27,7 @@
 
 - name: Install required packages
   apt: name={{item}} state=latest
-  sudo: yes
+  become: yes
   with_items:
     - build-essential
     - libffi-dev

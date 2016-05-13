@@ -1,5 +1,5 @@
 ---
 - name: Test sudo password
   command: /bin/ls
-  sudo: yes
+  become: yes
   tags: [sudo]

@@ -1,7 +1,7 @@
 ---
 - name: Add PPA
   apt_repository: repo='ppa:neovim-ppa/unstable'
-  sudo: yes
+  become: yes
   tags: [neovim, sudo]
 
 - name: Setup alternatives
@@ -10,12 +10,12 @@
     - vi
     - vim
     - editor
-  sudo: yes
+  become: yes
   tags: [neovim, sudo]
 
 - name: Install Neovim
   apt: name=neovim state=latest
-  sudo: yes
+  become: yes
   tags: [neovim, sudo]
 
 -
@@ -23,7 +23,7 @@
   apt:
     name: silversearcher-ag
     state: latest
-  sudo: yes
+  become: yes
   tags: [neovim, sudo]
 
 - name: symlink the ~/.config/nvim directory

@@ -1,12 +1,12 @@
 ---
 - name: Install ruby
   apt: name=ruby2.1 state=latest
-  sudo: yes
+  become: yes
   tags: [ruby, sudo]
 
 - name: Install required libs to compile ruby
   apt: pkg={{item}} state=latest
-  sudo: yes
+  become: yes
   with_items:
     - gawk
     - libreadline6-dev

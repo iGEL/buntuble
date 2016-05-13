@@ -1,7 +1,7 @@
 ---
 - name: Install xmonad
   apt: name=xmonad state=latest
-  sudo: yes
+  become: yes
   tags: [xmonad, sudo]
 
 - name: symlink the ~/.xmonad
@@ -17,7 +17,7 @@
     - libxml2-dev
     - libghc-gtk-dev
     - gtk2hs-buildtools
-  sudo: yes
+  become: yes
   tags: [xmonad, sudo]
 
 - name: Update cabal
@@ -37,12 +37,12 @@
 
 - name: Install suckless-tools for dmenu
   apt: name=suckless-tools state=latest
-  sudo: yes
+  become: yes
   tags: [xmonad, sudo]
 
 - name: Install feh for background images
   apt: name=feh state=latest
-  sudo: yes
+  become: yes
   tags: [xmonad, sudo]
 
 - name: symlink ~/.xinitrc
