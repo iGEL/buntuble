@@ -1,0 +1,20 @@
+---
+- name: Ensure that git is installed
+  apt:
+    name: git
+    state: latest
+  become: true
+  tags: [git, sudo]
+
+- name: Set git config
+  command: git config --global {{item.key}} "{{item.value}}"
+  with_items:
+    - key: user.name
+      value: Johannes Barre
+    - key: user.email
+      value: igel@igels.net
+    - key: push.default
+      value: simple
+    - key: commit.gpgsign
+      value: true
+  tags: [git]

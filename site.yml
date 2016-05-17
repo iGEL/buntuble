@@ -4,6 +4,7 @@
 
   roles:
     - test-sudo
+    - git
     - dotfiles
     - ntp
     - zsh
