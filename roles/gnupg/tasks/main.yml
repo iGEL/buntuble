@@ -1,0 +1,10 @@
+---
+- name: Symlinking the config files
+  file:
+    state: link
+    src: /home/{{ ansible_user_id }}/dev/files/gnupg/{{item}}
+    dest: /home/{{ ansible_user_id }}/.gnupg/{{item}}
+  with_items:
+    - gpg-agent.conf
+    - gpg.conf
+  tags: [gnupg]
