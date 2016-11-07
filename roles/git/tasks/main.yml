@@ -17,4 +17,6 @@
       value: simple
     - key: commit.gpgsign
       value: true
+    - key: core.editor
+      value: vi
   tags: [git]
