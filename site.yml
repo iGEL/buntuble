@@ -5,8 +5,8 @@
   roles:
     - test-sudo
     - git
-    - gnupg
     - dotfiles
+    - gnupg
     - ntp
     - zsh
     - urxvt

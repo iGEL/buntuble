@@ -1,4 +1,10 @@
 ---
+- name: Create GnuPG config dir
+  file:
+    state: directory
+    dest: /home/{{ ansible_user_id }}/.gnupg/
+    mode: 0700
+  tags: [gnupg]
 - name: Symlinking the config files
   file:
     state: link
