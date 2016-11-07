@@ -3,7 +3,7 @@ buntuble
 
 Ansible scripts to setup my dev machine.
 
-As of May 2016 I'm currently running Ubuntu 16.04 and Ansible 2.0.
+As of November 2016 I'm currently running Ubuntu 16.10 and Ansible 2.1.
 
 Installation
 ------------
