@@ -10,6 +10,7 @@
     - ntp
     - zsh
     - urxvt
+    - light-locker
     - xmonad
     - neovim
     - ruby
