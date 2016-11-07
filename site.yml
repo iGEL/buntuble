@@ -13,5 +13,6 @@
     - xmonad
     - neovim
     - ruby
-    - htop
     - docker
+    - htop
+    - keepassx

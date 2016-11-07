@@ -1,0 +1,5 @@
+---
+- name: Install KeePassX
+  apt: name=keepassx state=latest
+  become: yes
+  tags: [keepassx, sudo]
