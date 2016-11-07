@@ -38,3 +38,11 @@
     name: docker-compose
   become: true
   tags: [docker, sudo]
+
+- name: Add current user to docker group
+  user:
+    name: "{{ ansible_user_id }}"
+    groups: docker
+    append: yes
+  become: true
+  tags: [docker, sudo]
