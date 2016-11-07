@@ -8,3 +8,9 @@
   apt: name=ruby-dev state=latest
   become: yes
   tags: [ruby, sudo]
+
+- name: Don't generate ri & rdoc
+  copy:
+    dest: "/home/{{ ansible_user_id }}/.gemrc"
+    content: "gem: --no-document"
+  tags: [ruby]
