@@ -1,0 +1,7 @@
+---
+- name: Link vimperator config (you still need to install vimperator manually)
+  file:
+    state: link
+    src: /home/{{ ansible_user_id }}/dev/files/vimperatorrc
+    dest: /home/{{ ansible_user_id }}/.vimperatorrc
+  tags: [vimperator]
