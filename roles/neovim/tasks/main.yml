@@ -16,12 +16,16 @@
   become: yes
   tags: [neovim, sudo]
 
-- name: Install ag
-  apt:
-    name: silversearcher-ag
-    state: latest
+- name: Download ripgrep
+  get_url:
+    url: https://github.com/BurntSushi/ripgrep/releases/download/{{ripgrep_version}}/{{ripgrep_version_arch}}.tar.gz
+    dest: /home/{{ansible_user_id}}/Downloads/
+  tags: [neovim, sudo, rg]
+
+- name: Install ripgrep
+  command: tar xf /home/{{ansible_user_id}}/Downloads/{{ripgrep_version_arch}}.tar.gz --strip-components=1 -C /usr/local/bin {{ripgrep_version_arch}}/rg
   become: yes
-  tags: [neovim, sudo]
+  tags: [neovim, sudo, rg]
 
 - name: Install xsel
   apt:
