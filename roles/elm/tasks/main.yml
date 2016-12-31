@@ -1,0 +1,23 @@
+---
+- name: Install nodejs
+  apt: name=nodejs state=latest
+  become: yes
+  tags: [node, elm, sudo]
+
+- name: Link node
+  file:
+    dest: /usr/bin/node
+    src: /usr/bin/nodejs
+    state: link
+  become: yes
+  tags: [node, elm, sudo]
+
+- name: Install nmp
+  apt: name=npm state=latest
+  become: yes
+  tags: [node, elm, sudo]
+
+- name: Install Elm
+  npm: name=elm state=present global=yes
+  become: yes
+  tags: [elm, sudo]
