@@ -12,12 +12,17 @@
   become: yes
   tags: [node, elm, sudo]
 
-- name: Install nmp
+- name: Install npm
   apt: name=npm state=latest
   become: yes
   tags: [node, elm, sudo]
 
 - name: Install Elm
   npm: name=elm state=present global=yes
+  become: yes
+  tags: [elm, sudo]
+
+- name: Install Elm-test
+  npm: name=elm-test state=present global=yes
   become: yes
   tags: [elm, sudo]
