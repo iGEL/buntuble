@@ -37,24 +37,24 @@
     state: directory
   tags: [urxvt]
 
-- name: Download patched fonts
+- name: Download fonts
   get_url:
     url: '{{item.url}}'
-    dest: /home/{{ansible_user_id}}/.fonts/{{item.name}}
+    dest: /home/{{ansible_user_id}}/Downloads/{{item.name}}
   with_items:
-    -
-      name: DejaVu Sans Mono Bold Oblique for Powerline.ttf
-      url: https://github.com/Lokaltog/powerline-fonts/raw/master/DejaVuSansMono/DejaVu%20Sans%20Mono%20Bold%20Oblique%20for%20Powerline.ttf
-    -
-      name: DejaVu Sans Mono for Powerline.ttf
-      url: https://github.com/Lokaltog/powerline-fonts/raw/master/DejaVuSansMono/DejaVu%20Sans%20Mono%20for%20Powerline.ttf
-    -
-      name: DejaVu Sans Mono Bold for Powerline.ttf
-      url: https://github.com/Lokaltog/powerline-fonts/raw/master/DejaVuSansMono/DejaVu%20Sans%20Mono%20Bold%20for%20Powerline.ttf
-    -
-      name: DejaVu Sans Mono Oblique for Powerline.ttf
-      url: https://github.com/Lokaltog/powerline-fonts/raw/master/DejaVuSansMono/DejaVu%20Sans%20Mono%20Oblique%20for%20Powerline.ttf
+    - url: https://github.com/be5invis/Iosevka/releases/download/v1.12.5/01-iosevka-1.12.5.zip
+      name: iosevka.zip
+    - url: https://github.com/be5invis/Iosevka/releases/download/v1.12.5/02-iosevka-term-1.12.5.zip
+      name: iosevka-term.zip
+  tags: [urxvt]
 
+- name: Unzip fonts
+  unarchive:
+    src: /home/{{ansible_user_id}}/Downloads/{{item}}
+    dest: /home/{{ansible_user_id}}/.fonts/
+  with_items:
+    - iosevka.zip
+    - iosevka-term.zip
   tags: [urxvt]
   notify:
     - Refresh font cache
