@@ -4,14 +4,6 @@
   become: yes
   tags: [node, elm, sudo]
 
-- name: Link node
-  file:
-    dest: /usr/bin/node
-    src: /usr/bin/nodejs
-    state: link
-  become: yes
-  tags: [node, elm, sudo]
-
 - name: Install npm
   apt: name=npm state=latest
   become: yes
