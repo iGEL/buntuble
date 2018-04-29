@@ -42,9 +42,9 @@
     url: '{{item.url}}'
     dest: /home/{{ansible_user_id}}/Downloads/{{item.name}}
   with_items:
-    - url: https://github.com/be5invis/Iosevka/releases/download/v1.12.5/01-iosevka-1.12.5.zip
+    - url: https://github.com/be5invis/Iosevka/releases/download/v{{iosevka_version}}/01-iosevka-{{iosevka_version}}.zip
       name: iosevka.zip
-    - url: https://github.com/be5invis/Iosevka/releases/download/v1.12.5/02-iosevka-term-1.12.5.zip
+    - url: https://github.com/be5invis/Iosevka/releases/download/v{{iosevka_version}}/02-iosevka-term-{{iosevka_version}}.zip
       name: iosevka-term.zip
   tags: [urxvt]
 
