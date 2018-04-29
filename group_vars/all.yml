@@ -1,6 +1,2 @@
 ---
-elasticsearch_version: 1.4.1
-pentadactyl_version: 20140224
-chruby_version: 0.3.8
-ripgrep_version: 0.3.2
-ripgrep_version_arch: ripgrep-0.3.2-i686-unknown-linux-musl
+docker_compose_version: 1.21.0
