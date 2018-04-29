@@ -50,9 +50,9 @@
   become: yes
   tags: [xmonad, sudo]
 
-- name: symlink ~/.xinitrc
+- name: symlink ~/.xsessionrc
   file: >
-    src=/home/{{ ansible_user_id }}/dev/files/xinitrc
-    dest=/home/{{ ansible_user_id }}/.xinitrc
+    src=/home/{{ ansible_user_id }}/dev/files/xsessionrc
+    dest=/home/{{ ansible_user_id }}/.xsessionrc
     state=link
   tags: [xmonad]
