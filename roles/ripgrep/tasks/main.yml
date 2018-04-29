@@ -1,0 +1,5 @@
+---
+- name: Install ripgrep
+  command: snap install --classic rg
+  become: yes
+  tags: [sudo, ripgrep]
