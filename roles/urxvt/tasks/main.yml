@@ -16,6 +16,13 @@
   become: yes
   tags: [urxvt, sudo]
 
+- name: Create urxvt addon dir
+  file:
+    path: /usr/lib/urxvt/perl
+    state: directory
+  become: yes
+  tags: [urxvt, sudo]
+
 - name: Install keyboard-select
   get_url: url=https://github.com/muennich/urxvt-perls/raw/c05d319ba67c280940117d47e8f1a1ddc1b91a74/keyboard-select dest=/usr/lib/urxvt/perl/keyboard-select
   become: yes
