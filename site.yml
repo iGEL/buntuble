@@ -10,7 +10,6 @@
     - ntp
     - zsh
     - urxvt
-    - light-locker
     - xmonad
     - spacemacs
     - ruby
@@ -18,4 +17,3 @@
     - docker
     - htop
     - keepassx
-    - vimperator # should probably be the last thing
