@@ -3,7 +3,7 @@ buntuble
 
 Ansible scripts to setup my dev machine.
 
-As of November 2016 I'm currently running Ubuntu 16.10 and Ansible 2.1.
+As of April 2018 I'm currently running Ubuntu 18.04 and Ansible 2.5.1.
 
 Installation
 ------------
@@ -34,7 +34,7 @@ ansible-playbook -i inventory site.yml --skip-tags=sudo
 License (MIT)
 -------------
 
-Copyright (C) 2014-16 Johannes Barre
+Copyright (C) 2014-18 Johannes Barre
 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
