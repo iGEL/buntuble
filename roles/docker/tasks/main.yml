@@ -6,19 +6,13 @@
   become: true
   tags: [docker, sudo]
 
-- name: Add Docker's APT sources
-  copy:
-    dest: /etc/apt/sources.list.d/docker.list
-    # change test to stable once that's released
-    content: "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic test"
+- name: "Add Docker's APT sources"
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu stable
+    state: present
+    filename: docker
   become: true
   register: sources
-  tags: [docker, sudo]
-
-- name: Update apt
-  apt: update_cache=yes
-  become: true
-  when: sources is changed
   tags: [docker, sudo]
 
 - name: Install Docker
@@ -30,7 +24,7 @@
 
 - name: Install Docker Compose
   get_url:
-    url: https://github.com/docker/compose/releases/download/1.21.0/docker-compose-Linux-x86_64
+    url: https://github.com/docker/compose/releases/download/1.24.0/docker-compose-Linux-x86_64
     dest: /usr/local/bin/docker-compose
     mode: 0755
   become: true
