@@ -1,5 +1,9 @@
 ---
 - name: Install ripgrep
-  command: snap install --classic rg
+  command: snap install ripgrep
+  become: yes
+  tags: [sudo, ripgrep]
+- name: Aliasing rg
+  command: snap alias ripgrep.rg rg
   become: yes
   tags: [sudo, ripgrep]
