@@ -1,10 +1,4 @@
 ---
-- name: Add sway repository
-  apt_repository:
-    repo: ppa:samoilov-lex/sway
-  become: true
-  tags: [sway, sudo]
-
 - name: Install sway
   apt:
     name: "{{ packages }}"
