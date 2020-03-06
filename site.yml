@@ -11,7 +11,8 @@
     - ntp
     - zsh
     - urxvt
-    - spacemacs
+    - neovim
+    # - spacemacs
     - ruby
     #    - elm
     - docker
