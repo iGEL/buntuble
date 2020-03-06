@@ -13,7 +13,7 @@
     - urxvt
     - spacemacs
     - ruby
-    - elm
+    #    - elm
     - docker
     - htop
     - ripgrep
