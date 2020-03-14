@@ -22,3 +22,58 @@
     dest: /home/{{ ansible_user_id }}/.config/sway/config
     state: link
   tags: [sway, sudo]
+
+- name: Install mako dependencies
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - meson
+    - libcairo2-dev
+    - libpango1.0-dev
+    - libwayland-dev
+    - wayland-protocols
+    - cmake
+    - libsystemd-dev
+  become: true
+  tags: [sway, sudo]
+
+- name: Create dev/tmp
+  file:
+    dest: /home/{{ ansible_user_id }}/dev/tmp
+    state: directory
+  tags: [sway]
+
+- name: Get mako
+  get_url:
+    url: https://github.com/emersion/mako/archive/v1.4.1.tar.gz
+    dest: /home/{{ ansible_user_id }}/dev/tmp/mako.tar.gz
+  tags: [sway]
+
+- name: Unpack mako
+  unarchive:
+    src: /home/{{ ansible_user_id }}/dev/tmp/mako.tar.gz
+    dest: /home/{{ ansible_user_id }}/dev/tmp
+  tags: [sway]
+
+- name: Build mako
+  command: meson build
+  args:
+    chdir: /home/{{ ansible_user_id }}/dev/tmp/mako-1.4.1
+  tags: [sway]
+
+- name: Compile mako
+  command: ninja -C build
+  args:
+    chdir: /home/{{ ansible_user_id }}/dev/tmp/mako-1.4.1
+  tags: [sway]
+
+- name: Create ~/bin
+  file:
+    dest: /home/{{ ansible_user_id }}/bin
+    state: directory
+  tags: [sway]
+
+- name: Copy mako to ~/bin
+  command: mv /home/{{ ansible_user_id }}/dev/tmp/mako-1.4.1/build/mako /home/{{ ansible_user_id }}/bin/
+  tags: [sway]
