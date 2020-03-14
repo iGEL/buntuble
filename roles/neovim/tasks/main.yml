@@ -24,3 +24,19 @@
     dest=/home/{{ ansible_user_id }}/.config/nvim
     state=link
   tags: [neovim]
+
+- name: Make plugin directory
+  file:
+    dest: /home/{{ ansible_user_id }}/.local/share/nvim/site/autoload
+    state: directory
+  tags: [neovim]
+
+- name: Install vim-plug
+  get_url:
+    url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    dest: /home/{{ ansible_user_id }}/.local/share/nvim/site/autoload/plug.vim
+  tags: [neovim]
+
+- name: vim-plug install
+  command: /usr/bin/nvim -u ~/dev/files/nvim/install_vim-plug.vimrc +PlugInstall +qall
+  tags: [neovim]
