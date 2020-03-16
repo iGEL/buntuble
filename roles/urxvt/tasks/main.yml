@@ -44,16 +44,16 @@
     state: directory
   tags: [urxvt]
 
-- name: Create Downloads directory
+- name: Create Download directory
   file:
-    dest: /home/{{ansible_user_id}}/Downloads
+    path: /home/{{ ansible_user_id }}/buntuble/downloads/
     state: directory
   tags: [urxvt]
 
 - name: Download fonts
   get_url:
     url: '{{item.url}}'
-    dest: /home/{{ansible_user_id}}/Downloads/{{item.name}}
+    dest: /home/{{ansible_user_id}}/buntuble/downloads/{{item.name}}
   with_items:
     - url: https://github.com/be5invis/Iosevka/releases/download/v{{iosevka_version}}/01-iosevka-{{iosevka_version}}.zip
       name: iosevka.zip
@@ -63,7 +63,7 @@
 
 - name: Unzip fonts
   unarchive:
-    src: /home/{{ansible_user_id}}/Downloads/{{item}}
+    src: /home/{{ansible_user_id}}/buntuble/downloads/{{item}}
     dest: /home/{{ansible_user_id}}/.fonts/
   with_items:
     - iosevka.zip

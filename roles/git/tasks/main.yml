@@ -20,3 +20,45 @@
     - key: core.editor
       value: vi
   tags: [git]
+
+- name: Create Download directory
+  file:
+    path: /home/{{ ansible_user_id }}/buntuble/downloads/
+    state: directory
+  tags: [git]
+
+- name: Install git-crypt dependencies
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - make
+    - g++
+    - libssl-dev
+  become: true
+  tags: [git, sudo]
+
+- name: Download git-crypt
+  get_url:
+    url: https://github.com/AGWA/git-crypt/archive/0.6.0.tar.gz
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/git-crypt.tar.gz
+  tags: [git]
+
+- name: Unpack git-crypt
+  unarchive:
+    src: /home/{{ ansible_user_id }}/buntuble/downloads/git-crypt.tar.gz
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads
+  tags: [git, sudo]
+
+- name: compile git-crypt
+  command:
+    cmd: make
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/git-crypt-0.6.0/
+  tags: [git]
+
+- name: Install git-crypt
+  command:
+    cmd: make install
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/git-crypt-0.6.0/
+  become: true
+  tags: [git, sudo]
