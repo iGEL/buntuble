@@ -44,6 +44,12 @@
     state: directory
   tags: [urxvt]
 
+- name: Create Downloads directory
+  file:
+    dest: /home/{{ansible_user_id}}/Downloads
+    state: directory
+  tags: [urxvt]
+
 - name: Download fonts
   get_url:
     url: '{{item.url}}'
