@@ -1,6 +1,8 @@
 ---
 - name: Install Zsh
-  apt: name=zsh state=latest
+  apt:
+    name: zsh
+    state: latest
   become: yes
   tags: [zsh, sudo]
 
@@ -10,13 +12,15 @@
   tags: [zsh, sudo]
 
 - name: Setup /etc/zsh/zshenv
-  copy: src=zshenv dest=/etc/zsh/zshenv
+  copy:
+    src: zshenv
+    dest: /etc/zsh/zshenv
   become: yes
   tags: [zsh, sudo]
 
 - name: Symlink ~/.zshrc
-  file: >
-    src=/home/{{ ansible_user_id }}/dev/files/zshrc
-    dest=/home/{{ ansible_user_id }}/.zshrc
-    state=link
+  file:
+    src: /home/{{ ansible_user_id }}/dev/files/zshrc
+    dest: /home/{{ ansible_user_id }}/.zshrc
+    state: link
   tags: [zsh]

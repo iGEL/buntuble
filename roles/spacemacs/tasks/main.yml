@@ -1,6 +1,8 @@
 ---
 - name: Install Emacs
-  apt: name=emacs state=latest
+  apt:
+    name: emacs
+    state: latest
   become: yes
   tags: [spacemacs, sudo]
 

@@ -1,11 +1,15 @@
 ---
 - name: Install Neovim
-  apt: name=neovim state=latest
+  apt:
+    name: neovim
+    state: latest
   become: yes
   tags: [neovim, sudo]
 
 - name: Setup alternatives
-  alternatives: name={{item}} path=/usr/bin/nvim
+  alternatives:
+    name: "{{item}}"
+    path: /usr/bin/nvim
   with_items:
     - vi
   become: yes
@@ -19,10 +23,10 @@
   tags: [neovim, sudo]
 
 - name: symlink the ~/.config/nvim directory
-  file: >
-    src=/home/{{ ansible_user_id }}/dev/files/nvim
-    dest=/home/{{ ansible_user_id }}/.config/nvim
-    state=link
+  file:
+    src: /home/{{ ansible_user_id }}/dev/files/nvim
+    dest: /home/{{ ansible_user_id }}/.config/nvim
+    state: link
   tags: [neovim]
 
 - name: Make plugin directory

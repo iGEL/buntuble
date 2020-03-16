@@ -1,11 +1,15 @@
 ---
 - name: Install ntp
-  apt: name=ntp state=latest
+  apt:
+    name: ntp
+    state: latest
   become: yes
   tags: [ntp, sudo]
 
 - name: Configure ntp
-  copy: src=ntp.conf dest=/etc/ntp.conf
+  copy:
+    src: ntp.conf
+    dest: /etc/ntp.conf
   become: yes
   notify: restart ntp
   tags: [ntp, sudo]

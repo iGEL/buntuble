@@ -1,11 +1,15 @@
 ---
 - name: Install ruby
-  apt: name=ruby state=latest
+  apt:
+    name: ruby
+    state: latest
   become: yes
   tags: [ruby, sudo]
 
 - name: Install Development files
-  apt: name=ruby-dev state=latest
+  apt:
+    name: ruby-dev
+    state: latest
   become: yes
   tags: [ruby, sudo]
 
