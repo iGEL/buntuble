@@ -19,3 +19,4 @@
     - htop
     - ripgrep
     - openvpn
+    - awscli
