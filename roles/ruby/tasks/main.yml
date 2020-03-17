@@ -18,3 +18,11 @@
     dest: "/home/{{ ansible_user_id }}/.gemrc"
     content: "gem: --no-document"
   tags: [ruby]
+
+- name: Install bundler
+  gem:
+    name: bundler
+    state: latest
+    user_install: no
+  become: yes
+  tags: [ruby, sudo]
