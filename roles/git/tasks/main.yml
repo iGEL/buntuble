@@ -21,6 +21,13 @@
       value: vi
   tags: [git]
 
+- name: Install gitg
+  apt:
+    name: gitg
+    state: latest
+  become: true
+  tags: [git, sudo]
+
 - name: Create Download directory
   file:
     path: /home/{{ ansible_user_id }}/buntuble/downloads/
