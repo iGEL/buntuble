@@ -21,3 +21,4 @@
     - openvpn
     - awscli
     - terraform
+    - psql
