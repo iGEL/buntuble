@@ -6,6 +6,7 @@
     - test-sudo
     - git
     - dotfiles
+    - curl
     - gnupg
     - sway
     - ntp

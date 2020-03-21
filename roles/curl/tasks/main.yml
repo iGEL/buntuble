@@ -1,0 +1,8 @@
+---
+- name: Install curl
+  apt:
+    name: curl
+    state: latest
+  become: yes
+  tags: [curl, sudo]
+
