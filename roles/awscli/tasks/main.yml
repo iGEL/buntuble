@@ -20,5 +20,6 @@
   command:
     cmd: ./install
     chdir: /home/{{ ansible_user_id }}/buntuble/downloads/aws/
+    creates: /usr/local/bin/aws
   become: yes
   tags: [awscli, sudo]
