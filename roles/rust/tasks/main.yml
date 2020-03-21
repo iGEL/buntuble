@@ -1,0 +1,9 @@
+---
+- name: Install rust
+  apt:
+    pkg:
+      - rustc
+      - cargo
+    state: latest
+  become: yes
+  tags: [rust, sudo]

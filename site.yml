@@ -15,6 +15,7 @@
     - neovim
     # - spacemacs
     - ruby
+    - rust
     #    - elm
     - docker
     - htop
