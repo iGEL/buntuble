@@ -1,9 +1,17 @@
 ---
-- name: Install rust
-  apt:
-    pkg:
-      - rustc
-      - cargo
-    state: latest
-  become: yes
-  tags: [rust, sudo]
+- name: Create Download directory
+  file:
+    path: /home/{{ ansible_user_id }}/buntuble/downloads/
+    state: directory
+  tags: [rust]
+
+- name: Download rustup
+  get_url:
+    url: https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/rustup-init
+    mode: '755'
+  tags: [rust]
+
+- name: Install rustup
+  command: /home/{{ ansible_user_id }}/buntuble/downloads/rustup-init -y
+  tags: [rust]
