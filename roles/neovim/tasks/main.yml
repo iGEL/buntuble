@@ -15,9 +15,9 @@
   become: yes
   tags: [neovim, sudo]
 
-- name: Install xsel
+- name: Install wl-clipboard
   apt:
-    name: xsel
+    name: wl-clipboard
     state: latest
   become: yes
   tags: [neovim, sudo]
