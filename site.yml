@@ -19,6 +19,7 @@
     #    - elm
     - docker
     - htop
+    - jq
     - ripgrep
     - openvpn
     - awscli
