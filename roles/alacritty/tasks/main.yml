@@ -1,0 +1,64 @@
+---
+- apt_repository:
+    repo: ppa:mmstick76/alacritty
+  become: yes
+  tags: [alacritty, sudo]
+
+- name: Install alacritty
+  apt:
+    name: alacritty
+    state: latest
+  become: yes
+  tags: [alacritty, sudo]
+
+- name: Create config directory
+  file:
+    dest: /home/{{ansible_user_id}}/.config/alacritty/
+    state: directory
+  tags: [alacritty]
+
+- name: symlink the config file
+  file:
+    src: /home/{{ ansible_user_id }}/dev/files/alacritty.yml
+    dest: /home/{{ ansible_user_id }}/.config/alacritty/alacritty.yml
+    state: link
+  tags: [alacritty]
+
+- name: set alacritty as default terminal emulator
+  command: update-alternatives --set x-terminal-emulator /usr/bin/alacritty
+  become: yes
+  tags: [alacritty, sudo]
+
+- name: Create font directory
+  file:
+    dest: /home/{{ansible_user_id}}/.fonts
+    state: directory
+  tags: [alacritty]
+
+- name: Create Download directory
+  file:
+    path: /home/{{ ansible_user_id }}/buntuble/downloads/
+    state: directory
+  tags: [alacritty]
+
+- name: Download fonts
+  get_url:
+    url: '{{item.url}}'
+    dest: /home/{{ansible_user_id}}/buntuble/downloads/{{item.name}}
+  with_items:
+    - url: https://github.com/be5invis/Iosevka/releases/download/v{{iosevka_version}}/01-iosevka-{{iosevka_version}}.zip
+      name: iosevka.zip
+    - url: https://github.com/be5invis/Iosevka/releases/download/v{{iosevka_version}}/02-iosevka-term-{{iosevka_version}}.zip
+      name: iosevka-term.zip
+  tags: [alacritty]
+
+- name: Unzip fonts
+  unarchive:
+    src: /home/{{ansible_user_id}}/buntuble/downloads/{{item}}
+    dest: /home/{{ansible_user_id}}/.fonts/
+  with_items:
+    - iosevka.zip
+    - iosevka-term.zip
+  tags: [alacritty]
+  notify:
+    - Refresh font cache
