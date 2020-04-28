@@ -1,0 +1,9 @@
+---
+- name: Set envvar to use wayland for Firefox
+  lineinfile:
+    path: /home/{{ ansible_user_id }}/.config/environment.d/10-firefox.conf
+    mode: 0644
+    line: MOZ_ENABLE_WAYLAND=1
+    create: yes
+  tags: [firefox]
+
