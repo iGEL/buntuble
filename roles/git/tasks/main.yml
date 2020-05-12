@@ -19,6 +19,8 @@
       value: true
     - key: core.editor
       value: vi
+    - key: rebase.autosquash
+      value: true
   tags: [git]
 
 - name: Install gitg
