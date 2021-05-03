@@ -1,4 +1,12 @@
 ---
+- name: Install dependencies
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - libclang-dev
+  become: true
+  tags: [rust, sudo]
 - name: Create Download directory
   file:
     path: /home/{{ ansible_user_id }}/buntuble/downloads/
