@@ -8,7 +8,7 @@
 
 - name: "Add Docker's APT sources"
   apt_repository:
-    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu eoan stable"
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu hirsute stable"
     state: present
     filename: docker
   become: true
@@ -24,7 +24,7 @@
 
 - name: Install Docker Compose
   get_url:
-    url: https://github.com/docker/compose/releases/download/1.25.4/docker-compose-Linux-x86_64
+    url: https://github.com/docker/compose/releases/download/1.29.1/docker-compose-Linux-x86_64
     dest: /usr/local/bin/docker-compose
     mode: 0755
   become: true
