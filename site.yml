@@ -11,11 +11,11 @@
     - sway
     - ntp
     - zsh
-    - alacritty
     - neovim
+    - rust
+    - alacritty
     # - spacemacs
     - ruby
-    - rust
     #    - elm
     - docker
     - htop

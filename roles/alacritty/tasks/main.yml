@@ -1,13 +1,54 @@
 ---
-- apt_repository:
-    repo: ppa:mmstick76/alacritty
+- name: Install dependencies
+  apt:
+    pkg:
+    - cmake
+    - pkg-config
+    - libfreetype6-dev
+    - libfontconfig1-dev
+    - libxcb-xfixes0-dev
+    - python3
   become: yes
   tags: [alacritty, sudo]
 
+- name: Create Download directory
+  file:
+    path: /home/{{ ansible_user_id }}/buntuble/downloads/
+    state: directory
+  tags: [alacritty]
+
+- name: Download source
+  get_url:
+    url: 'https://github.com/alacritty/alacritty/archive/refs/tags/v{{ alacritty_version }}.tar.gz'
+    dest: /home/{{ansible_user_id}}/buntuble/downloads/alacritty-{{ alacritty_version }}.tar.gz
+  tags: [alacritty]
+
+- name: Untar alacritty
+  unarchive:
+    src: /home/{{ ansible_user_id }}/buntuble/downloads/alacritty-{{ alacritty_version }}.tar.gz
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/
+  tags: [alacritty]
+
+- name: Compile alacritty
+  command:
+    cmd: /home/{{ ansible_user_id }}/.cargo/bin/cargo build --release
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/alacritty-{{ alacritty_version }}/
+    creates: /home/{{ ansible_user_id }}/buntuble/downloads/alacritty-{{ alacritty_version }}/target/release/alacritty
+  tags: [alacritty]
+
 - name: Install alacritty
-  apt:
-    name: alacritty
-    state: latest
+  copy:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+    mode: '{{ item.mode }}'
+    remote_src: true
+  with_items:
+    - src: /home/{{ ansible_user_id }}/buntuble/downloads/alacritty-{{ alacritty_version }}/target/release/alacritty
+      dest: /usr/local/bin/alacritty
+      mode: '755'
+    - src: /home/{{ ansible_user_id }}/buntuble/downloads/alacritty-{{ alacritty_version }}/extra/linux/Alacritty.desktop
+      dest: /home/{{ ansible_user_id }}/.local/share/applications/Alacritty.desktop
+      mode: '644'
   become: yes
   tags: [alacritty, sudo]
 
@@ -25,19 +66,16 @@
   tags: [alacritty]
 
 - name: set alacritty as default terminal emulator
-  command: update-alternatives --set x-terminal-emulator /usr/bin/alacritty
+  command: '{{ item }}'
+  with_items:
+    - update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/local/bin/alacritty 50
+    - update-alternatives --set x-terminal-emulator /usr/local/bin/alacritty
   become: yes
   tags: [alacritty, sudo]
 
 - name: Create font directory
   file:
     dest: /home/{{ansible_user_id}}/.fonts
-    state: directory
-  tags: [alacritty]
-
-- name: Create Download directory
-  file:
-    path: /home/{{ ansible_user_id }}/buntuble/downloads/
     state: directory
   tags: [alacritty]
 
