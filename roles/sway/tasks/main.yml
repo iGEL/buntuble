@@ -25,3 +25,47 @@
     state: link
   tags: [sway, sudo]
 
+- name: Create Download directory
+  file:
+    path: /home/{{ ansible_user_id }}/buntuble/downloads/
+    state: directory
+  tags: [sway]
+
+- name: Download bemenu
+  get_url:
+    url: https://github.com/Cloudef/bemenu/archive/refs/tags/0.5.0.tar.gz
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/bemenu.tar.gz
+  tags: [sway]
+
+- name: Untar bemenu
+  unarchive:
+    src: /home/{{ ansible_user_id }}/buntuble/downloads/bemenu.tar.gz
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/
+  tags: [sway]
+
+- name: Install bemenu dependencies
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - wayland-protocols
+    - libwayland-bin
+    - libwayland-dev
+    - libcairo2-dev
+    - libpango1.0-dev
+    - libxkbcommon-dev
+  become: true
+  tags: [sway, sudo]
+
+- name: Compile bemenu
+  command:
+    cmd: make clients wayland
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/bemenu-0.5.0
+  tags: [sway]
+
+- name: Install bemenu
+  command:
+    cmd: make install PREFIX=/usr
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/bemenu-0.5.0
+  become: true
+  tags: [sway, sudo]
