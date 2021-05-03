@@ -1,0 +1,33 @@
+---
+- name: Trust Node's signing key
+  apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    id: 1655A0AB68576280
+  become: true
+  tags: [node, sudo]
+
+- name: "Add node's APT sources"
+  apt_repository:
+    repo: >
+      deb https://deb.nodesource.com/node_14.x hirsute main
+      deb-src https://deb.nodesource.com/node_14.x hirsute main
+    state: present
+    filename: node
+  become: true
+  register: sources
+  tags: [node, sudo]
+
+- name: Install node
+  apt:
+    pkg:
+      - nodejs
+  become: true
+  tags: [node, sudo]
+
+- name: Install yarn
+  npm:
+    name: yarn
+    state: present
+    global: yes
+  become: true
+  tags: [node, sudo]
