@@ -21,6 +21,10 @@
       value: vi
     - key: rebase.autosquash
       value: true
+    - key: pull.ff
+      value: only
+    - key: init.defaultBranch
+      value: main
   tags: [git]
 
 - name: Install gitg
