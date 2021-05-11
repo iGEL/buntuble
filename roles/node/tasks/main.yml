@@ -7,14 +7,20 @@
   tags: [node, sudo]
 
 - name: "Add node's APT sources"
-  apt_repository:
-    repo: >
+  copy:
+    dest: /etc/apt/sources.list.d/node.list
+    content: |
       deb https://deb.nodesource.com/node_14.x hirsute main
       deb-src https://deb.nodesource.com/node_14.x hirsute main
-    state: present
-    filename: node
   become: true
-  register: sources
+  register: nodesources
+  tags: [node, sudo]
+
+- name: "Update sources"
+  apt:
+    update_cache: yes
+  when: nodesources.changed
+  become: true
   tags: [node, sudo]
 
 - name: Install node
