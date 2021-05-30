@@ -69,3 +69,7 @@
     chdir: /home/{{ ansible_user_id }}/buntuble/downloads/bemenu-0.5.0
   become: true
   tags: [sway, sudo]
+
+- name: Set cursor theme
+  command: dconf write /org/gnome/desktop/interface/cursor-theme "'DMZ-Black'"
+  tags: [sway]
