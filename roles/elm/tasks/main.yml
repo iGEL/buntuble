@@ -1,29 +1,51 @@
 ---
-- name: Install nodejs
-  apt:
-    name: nodejs
-    state: latest
-  become: yes
-  tags: [node, elm, sudo]
+- name: Create Download directory
+  file:
+    path: /home/{{ ansible_user_id }}/buntuble/downloads/
+    state: directory
+  tags: [elm]
 
-- name: Install npm
-  apt:
-    name: npm
-    state: latest
-  become: yes
-  tags: [node, elm, sudo]
+- name: Download elm
+  get_url:
+    url: https://github.com/elm/compiler/releases/download/0.19.1/binary-for-linux-64-bit.gz
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/elm.gz
+  tags: [elm]
 
-- name: Install Elm
+- name: Untar Elm
+  command:
+    cmd: gunzip -k /home/{{ ansible_user_id }}/buntuble/downloads/elm.gz
+    creates: /home/{{ ansible_user_id }}/buntuble/downloads/elm
+  tags: [elm]
+
+- name: Make Elm executable
+  copy:
+    src: /home/{{ ansible_user_id }}/buntuble/downloads/elm
+    dest: /usr/local/bin/elm
+    mode: '755'
+    remote_src: yes
+  become: yes
+  tags: [elm, sudo]
+
+- name: Install Elm-format
   npm:
-    name: elm
+    name: elm-format
     state: present
     global: yes
+    unsafe_perm: yes
   become: yes
   tags: [elm, sudo]
 
 - name: Install Elm-test
   npm:
     name: elm-test
+    state: present
+    global: yes
+  become: yes
+  tags: [elm, sudo]
+
+- name: Install Elm language server
+  npm:
+    name: "@elm-tooling/elm-language-server"
     state: present
     global: yes
   become: yes

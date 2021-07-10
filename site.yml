@@ -16,7 +16,6 @@
     - alacritty
     # - spacemacs
     - ruby
-    #    - elm
     - docker
     - htop
     - jq
@@ -27,3 +26,4 @@
     - psql
     - firefox
     - node
+    - elm
