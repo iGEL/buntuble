@@ -1,0 +1,6 @@
+- name: Configure ntp
+  copy:
+    src: workman
+    dest: /usr/share/X11/xkb/symbols/workman
+  become: yes
+  tags: [workman, sudo]
