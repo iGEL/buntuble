@@ -1,4 +1,4 @@
-- name: Configure ntp
+- name: Install workman
   copy:
     src: workman
     dest: /usr/share/X11/xkb/symbols/workman
