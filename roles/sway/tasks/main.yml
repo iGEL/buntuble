@@ -73,3 +73,19 @@
 - name: Set cursor theme
   command: dconf write /org/gnome/desktop/interface/cursor-theme "'DMZ-Black'"
   tags: [sway]
+
+- name: Set XDG_SESSION_TYPE=wayland
+  lineinfile:
+    path: /home/{{ ansible_user_id }}/.config/environment.d/10-wayland.conf
+    mode: 0644
+    line: XDG_SESSION_TYPE="${XDG_SESSION_TYPE:-wayland}"
+    create: yes
+  tags: [sway]
+
+- name: Set XDG_CURRENT_DESKTOP=sway
+  lineinfile:
+    path: /home/{{ ansible_user_id }}/.config/environment.d/10-sway.conf
+    mode: 0644
+    line: XDG_CURRENT_DESKTOP="${XDG_CURRENT_DESKTOP:-sway}"
+    create: yes
+  tags: [sway]
