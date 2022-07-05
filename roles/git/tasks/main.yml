@@ -25,6 +25,8 @@
       value: only
     - key: init.defaultBranch
       value: main
+    - key: remote.origin.prune
+      value: true
   tags: [git]
 
 - name: Install gitg
