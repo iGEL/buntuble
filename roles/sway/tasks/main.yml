@@ -25,6 +25,16 @@
     state: link
   tags: [sway, sudo]
 
+- name: Configure environment variables
+  copy:
+    src: "{{ item }}"
+    dest: /home/{{ ansible_user_id }}/.config/environment.d/{{ item }}
+  with_items:
+    - 10-firefox.conf
+    - 10-sway.conf
+    - 10-wayland.conf
+  tags: [sway]
+
 - name: Create Download directory
   file:
     path: /home/{{ ansible_user_id }}/buntuble/downloads/
