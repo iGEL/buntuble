@@ -25,6 +25,13 @@
     state: link
   tags: [sway, sudo]
 
+- name: Add user to video group so he can change the backlight brightness
+  user:
+    name: "{{ ansible_user_id }}"
+    groups: video
+    append: yes
+  become: yes
+
 - name: Configure environment variables
   copy:
     src: "{{ item }}"
