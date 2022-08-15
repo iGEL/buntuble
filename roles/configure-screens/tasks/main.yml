@@ -1,0 +1,5 @@
+- name: Copy configure-screens
+  copy:
+    src: configure-screens
+    dest: /home/{{ ansible_user_id }}/bin/configure-screens
+    tags: [configure-screens]

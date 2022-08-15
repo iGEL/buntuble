@@ -9,6 +9,7 @@
     - curl
     - gnupg
     - sway
+    - configure-screens
     - ntp
     - zsh
     - neovim
