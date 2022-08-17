@@ -8,6 +8,7 @@
     - dotfiles
     - curl
     - gnupg
+    - workman
     - sway
     - configure-screens
     - ntp
@@ -27,4 +28,4 @@
     - psql
     - firefox
     - node
-    - elm
+    # - elm
