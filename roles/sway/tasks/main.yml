@@ -31,6 +31,7 @@
     groups: video
     append: yes
   become: yes
+  tags: [sway, sudo]
 
 - name: Configure environment variables
   copy:
