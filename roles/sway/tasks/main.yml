@@ -33,6 +33,12 @@
   become: yes
   tags: [sway, sudo]
 
+- name: Create environment.d
+  file:
+    dest: /home/{{ ansible_user_id }}/.config/environment.d/
+    state: directory
+  tags: [sway]
+
 - name: Configure environment variables
   copy:
     src: "{{ item }}"
@@ -72,6 +78,7 @@
     - libcairo2-dev
     - libpango1.0-dev
     - libxkbcommon-dev
+    - build-essential
   become: true
   tags: [sway, sudo]
 
