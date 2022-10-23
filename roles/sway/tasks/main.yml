@@ -1,16 +1,22 @@
 ---
-#- name: Install sway
-#  apt:
-#    name: "{{ packages }}"
-#  vars:
-#    packages:
-#    - sway
-#    - swaylock
-#    - swayidle
-#    - i3status
-#    - mako-notifier
-#  become: true
-#  tags: [sway, sudo]
+- name: Install sway
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - sway
+    - swaylock
+    - swayidle
+    - i3status
+  become: true
+  tags: [sway, sudo]
+
+- name: Uninstall mako
+  apt:
+    name: mako-notifier
+    state: absent
+  become: true
+  tags: [sway, sudo]
 
 - name: Create .config/sway
   file:

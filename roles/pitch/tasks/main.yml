@@ -1,0 +1,93 @@
+---
+- name: Install direnv
+  apt:
+    name: direnv
+    state: latest
+  become: true
+  tags: [pitch, sudo]
+
+- name: Install Watchexec
+  ansible.builtin.apt:
+    deb: 'https://github.com/watchexec/watchexec/releases/download/cli-v{{ watchexec_version }}/watchexec-{{ watchexec_version }}-x86_64-unknown-linux-musl.deb'
+  become: true
+  tags: [pitch, sudo]
+
+- name: Install nvm
+  shell: >
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+  args:
+    creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+  tags: [pitch]
+
+- name: Source nvm in ~/.{{ item }}
+  lineinfile: >
+      dest=~/.{{ item }}
+      line="source ~/.nvm/nvm.sh"
+      create=yes
+  with_items:
+    - zshrc
+  tags: [pitch]
+
+- name: Install node
+  ansible.builtin.shell: |
+    source {{ ansible_env.HOME }}/.nvm/nvm.sh && nvm install {{item}}
+  args:
+    executable: /bin/bash
+    chdir: "$HOME"
+    creates: "$HOME/.nvm/versions/node/v{{item}}"
+  loop:
+    - 14.19.3
+  tags: [pitch]
+
+- name: Install npm
+  ansible.builtin.shell: |
+    source {{ ansible_env.HOME }}/.nvm/nvm.sh && npm install -g npm@{{item}}
+  args:
+    executable: /bin/bash
+    chdir: "$HOME"
+  loop:
+    - 6.13.4
+  tags: [pitch]
+
+- name: Install openjdk
+  ansible.builtin.apt:
+    name: default-jdk
+  become: true
+  tags: [pitch, sudo]
+
+- name: Install Leiningen
+  ansible.builtin.apt:
+    name: leiningen
+  become: true
+  tags: [pitch, sudo]
+
+- name: Install clojure
+  shell: >
+    curl -o- https://download.clojure.org/install/linux-install-1.11.1.1105.sh | bash
+  args:
+    creates: "/usr/local/bin/clojure"
+  become: true
+  tags: [pitch, sudo]
+
+- name: Install pip
+  ansible.builtin.apt:
+    name: python3-pip
+  become: true
+  tags: [pitch, sudo]
+
+- name: Install yawsso
+  ansible.builtin.pip:
+    name: yawsso==0.6.2
+  tags: [pitch]
+
+- name: Download Babashka
+  ansible.builtin.get_url:
+    url: "https://github.com/babashka/babashka/releases/download/v0.8.2/babashka-0.8.2-linux-amd64-static.tar.gz"
+    dest: /home/{{ansible_user_id}}/buntuble/downloads/babashka-0.8.2-linux-amd64-static.tar.gz
+  tags: [pitch]
+
+- name: Unpack Babashka
+  unarchive:
+    src: /home/{{ ansible_user_id }}/buntuble/downloads/babashka-0.8.2-linux-amd64-static.tar.gz
+    dest: /home/{{ ansible_user_id }}/bin
+  tags: [pitch]
