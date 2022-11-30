@@ -50,7 +50,7 @@
 
 - name: Set default node version
   ansible.builtin.lineinfile: >
-      dest=~/.tool-version
+      dest=~/.tool-versions
       line="nodejs 18.12.1"
       create=yes
   tags: [pitch]
