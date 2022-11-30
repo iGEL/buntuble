@@ -14,7 +14,7 @@
     - ntp
     - zsh
     - neovim
-    - rust
+    # - rust
     - alacritty
     # - spacemacs
     - ruby
@@ -27,6 +27,6 @@
     - terraform
     - psql
     - firefox
-    - node
+    # - node
     # - elm
     - pitch
