@@ -12,41 +12,55 @@
   become: true
   tags: [pitch, sudo]
 
-- name: Install nvm
-  shell: >
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+- name: Install asdf
+  ansible.builtin.shell: >
+    git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2
   args:
-    creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+    creates: "{{ ansible_env.HOME }}/.asdf/asdf.sh"
   tags: [pitch]
 
-- name: Source nvm in ~/.{{ item }}
-  lineinfile: >
+- name: Source asdf in ~/.{{ item }}
+  ansible.builtin.lineinfile: >
       dest=~/.{{ item }}
-      line="source ~/.nvm/nvm.sh"
+      line=". $HOME/.asdf/asdf.sh"
       create=yes
   with_items:
     - zshrc
   tags: [pitch]
 
-- name: Install node
-  ansible.builtin.shell: |
-    source {{ ansible_env.HOME }}/.nvm/nvm.sh && nvm install {{item}}
+- name: Install nodejs plugin
+  ansible.builtin.shell: >
+    source {{ ansible_env.HOME }}/.asdf/asdf.sh && asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
   args:
     executable: /bin/bash
     chdir: "$HOME"
-    creates: "$HOME/.nvm/versions/node/v{{item}}"
-  loop:
-    - 14.19.3
+    creates: "$HOME/.asdf/plugins/nodejs/bin/install"
   tags: [pitch]
 
-- name: Install npm
+- name: Install node
   ansible.builtin.shell: |
-    source {{ ansible_env.HOME }}/.nvm/nvm.sh && npm install -g npm@{{item}}
+    source {{ ansible_env.HOME }}/.asdf/asdf.sh && asdf install nodejs {{item}}
   args:
     executable: /bin/bash
     chdir: "$HOME"
+    creates: "$HOME/.asdf/installs/nodejs/{{item}}/bin/node"
   loop:
-    - 6.13.4
+    - 18.12.1
+  tags: [pitch]
+
+- name: Set default node version
+  ansible.builtin.lineinfile: >
+      dest=~/.tool-version
+      line="nodejs 18.12.1"
+      create=yes
+  tags: [pitch]
+
+- name: Install yarn
+  ansible.builtin.shell: >
+    source {{ ansible_env.HOME }}/.asdf/asdf.sh && npm i -g yarn
+  args:
+    executable: /bin/bash
+    chdir: "$HOME"
   tags: [pitch]
 
 - name: Install openjdk
@@ -62,7 +76,7 @@
   tags: [pitch, sudo]
 
 - name: Install clojure
-  shell: >
+  ansible.builtin.shell: >
     curl -o- https://download.clojure.org/install/linux-install-1.11.1.1105.sh | bash
   args:
     creates: "/usr/local/bin/clojure"
