@@ -1,8 +1,7 @@
 ---
-- name: Install Neovim
-  apt:
-    name: neovim
-    state: latest
+- name: Install lastest stable Neovim
+  ansible.builtin.apt:
+    deb: 'https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb'
   become: yes
   tags: [neovim, sudo]
 
