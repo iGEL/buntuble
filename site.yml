@@ -18,6 +18,7 @@
     - alacritty
     # - spacemacs
     - ruby
+    - clojure
     - docker
     - htop
     - jq
