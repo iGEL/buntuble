@@ -43,3 +43,20 @@
 - name: vim-plug install
   command: /usr/bin/nvim -u ~/dev/files/nvim/install_vim-plug.vimrc +PlugInstall +qall
   tags: [neovim]
+
+- name: Create Download directory
+  file:
+    path: /home/{{ ansible_user_id }}/buntuble/downloads/
+    state: directory
+  tags: [neovim]
+
+- name: Download treesitter
+  get_url:
+    url: https://github.com/tree-sitter/tree-sitter/releases/download/v0.20.8/tree-sitter-linux-x64.gz
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/tree-sitter-linux-x64.gz
+  tags: [neovim]
+
+- name: Install treesitter
+  command: sh -c "/usr/bin/gunzip /home/{{ ansible_user_id }}/buntuble/downloads/tree-sitter-linux-x64.gz -c > /usr/local/bin/tree-sitter && chmod a+x /usr/local/bin/tree-sitter"
+  become: yes
+  tags: [neovim, sudo]
