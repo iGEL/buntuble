@@ -1,6 +1,6 @@
 ---
 - name: Install sway
-  apt:
+  ansible.builtin.apt:
     name: "{{ packages }}"
   vars:
     packages:
@@ -12,7 +12,7 @@
   tags: [sway, sudo]
 
 - name: Uninstall mako
-  apt:
+  ansible.builtin.apt:
     name: mako-notifier
     state: absent
   become: true
@@ -74,7 +74,7 @@
   tags: [sway]
 
 - name: Install bemenu dependencies
-  apt:
+  ansible.builtin.apt:
     name: "{{ packages }}"
   vars:
     packages:
@@ -122,7 +122,7 @@
   tags: [sway]
 
 - name: Install mako dependencies
-  apt:
+  ansible.builtin.apt:
     name: "{{ packages }}"
   vars:
     packages:
@@ -175,3 +175,10 @@
 - name: Copy mako to ~/bin
   command: mv /home/{{ ansible_user_id }}/buntuble/downloads/mako-1.7.1/build/mako /home/{{ ansible_user_id }}/bin/
   tags: [sway]
+
+- name: Install xdg-desktop-portal-wlr for screen sharing
+  ansible.builtin.apt:
+    name: xdg-desktop-portal-wlr
+    state: latest
+  become: yes
+  tags: [sway, sudo]
