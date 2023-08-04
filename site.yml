@@ -23,9 +23,9 @@
     - htop
     - jq
     - ripgrep
-    - openvpn
+      #- openvpn
     - awscli
-    - terraform
+      #  - terraform
     - psql
     - firefox
     # - node
