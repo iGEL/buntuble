@@ -1,13 +1,269 @@
 ---
-- name: Install sway
+# SEE https://github.com/luispabon/sway-ubuntu/blob/master/Makefile
+
+- name: Install pipx
+  ansible.builtin.apt:
+    name: pipx
+  become: true
+  tags: [sway, sudo]
+
+- name: Uninstall meson && ninja
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+    state: absent
+  vars:
+    packages:
+    - meson
+    - ninja-build
+  become: true
+  tags: [sway, sudo]
+
+- name: Install ninja & meson with pipx
+  ansible.builtin.command:
+    cmd: sh -c "PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install {{item}} && PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx upgrade {{item}}"
+  with_items:
+    - ninja
+    - meson
+  become: true
+  tags: [sway, sudo]
+
+- name: Create Download directory
+  file:
+    path: /home/{{ ansible_user_id }}/buntuble/downloads/
+    state: directory
+  tags: [sway]
+
+- name: Clone seatd
+  ansible.builtin.git:
+    repo: https://git.sr.ht/~kennylevinsen/seatd
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/seatd
+    version: "{{seatd_version}}"
+  tags: [sway]
+
+- name: Compile seatd
+  command:
+    cmd: sh -c "meson setup build/ && ninja -C build/"
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/seatd
+  tags: [sway]
+
+- name: Install seatd
+  command:
+    cmd: ninja -C build/ install
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/seatd
+  become: true
+  tags: [sway, sudo]
+
+- name: Download wlroots
+  get_url:
+    url: https://gitlab.freedesktop.org/wlroots/wlroots/-/archive/{{wlroots_version}}/wlroots-{{wlroots_version}}.tar.bz2
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/wlroots-{{wlroots_version}}.tar.bz2
+  tags: [sway]
+
+- name: Untar wlroots
+  unarchive:
+    src: /home/{{ ansible_user_id }}/buntuble/downloads/wlroots-{{wlroots_version}}.tar.bz2
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/
+  tags: [sway]
+
+- name: Install wlroots dependencies
   ansible.builtin.apt:
     name: "{{ packages }}"
   vars:
     packages:
-    - sway
-    - swaylock
-    - swayidle
-    - i3status
+    - build-essential
+    - wayland-protocols
+    - libwayland-dev
+    - libegl1-mesa-dev
+    - libgles2-mesa-dev
+    - libdrm-dev
+    - libgbm-dev
+    - libinput-dev
+    - libxkbcommon-dev
+    - libgudev-1.0-dev
+    - libpixman-1-dev
+    - libsystemd-dev
+    - hwdata
+    - cmake
+    - libpng-dev
+    - libavutil-dev
+    - libavcodec-dev
+    - libavformat-dev
+    - libxcb-composite0-dev
+    - libxcb-icccm4-dev
+    - libxcb-image0-dev
+    - libxcb-render0-dev
+    - libxcb-xfixes0-dev
+    - libxkbcommon-dev
+    - libxcb-xinput-dev
+    - libx11-xcb-dev
+    - libxcb-dri3-dev
+    - libxcb-res0-dev
+  become: true
+  tags: [sway, sudo]
+
+- name: Compile wlroots
+  command:
+    cmd: sh -c "meson setup build/ && ninja -C build/"
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/wlroots-{{wlroots_version}}
+  tags: [sway]
+
+- name: Install wlroots
+  command:
+    cmd: ninja -C build/ install
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/wlroots-{{wlroots_version}}
+  become: true
+  tags: [sway, sudo]
+
+- name: Download sway
+  get_url:
+    url: https://github.com/swaywm/sway/releases/download/{{sway_version}}/sway-{{sway_version}}.tar.gz
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/sway-{{sway_version}}.tar.gz
+  tags: [sway]
+
+- name: Untar sway
+  unarchive:
+    src: /home/{{ ansible_user_id }}/buntuble/downloads/sway-{{sway_version}}.tar.gz
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/
+  tags: [sway]
+
+- name: Install sway dependencies
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - libjson-c-dev
+    - libpango1.0-dev
+    - libcairo2-dev
+    - libgdk-pixbuf2.0-dev
+    - scdoc
+    - xwayland
+  become: true
+  tags: [sway, sudo]
+
+- name: Compile sway
+  command:
+    cmd: sh -c "meson setup build/ && ninja -C build/"
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/sway-{{sway_version}}
+  tags: [sway]
+
+- name: Install sway
+  command:
+    cmd: ninja -C build/ install
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/sway-{{sway_version}}
+  become: true
+  tags: [sway, sudo]
+
+- name: Download swaylock
+  get_url:
+    url: https://github.com/swaywm/swaylock/releases/download/v{{swaylock_version}}/swaylock-{{swaylock_version}}.tar.gz
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/swaylock-{{swaylock_version}}.tar.gz
+  tags: [sway]
+
+- name: Untar swaylock
+  unarchive:
+    src: /home/{{ ansible_user_id }}/buntuble/downloads/swaylock-{{swaylock_version}}.tar.gz
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/
+  tags: [sway]
+
+- name: Install swaylock dependencies
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - libpam0g-dev
+  become: true
+  tags: [sway, sudo]
+
+- name: Compile swaylock
+  command:
+    cmd: sh -c "meson setup build/ && ninja -C build/"
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/swaylock-{{swaylock_version}}
+  tags: [sway]
+
+- name: Install swaylock
+  command:
+    cmd: ninja -C build/ install
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/swaylock-{{swaylock_version}}
+  become: true
+  tags: [sway, sudo]
+
+- name: Download swayidle
+  get_url:
+    url: https://github.com/swaywm/swayidle/releases/download/{{swayidle_version}}/swayidle-{{swayidle_version}}.tar.gz
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/swayidle-{{swayidle_version}}.tar.gz
+  tags: [sway]
+
+- name: Untar swayidle
+  unarchive:
+    src: /home/{{ ansible_user_id }}/buntuble/downloads/swayidle-{{swayidle_version}}.tar.gz
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/
+  tags: [sway]
+
+- name: Install swayidle dependencies
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - libpam0g-dev
+  become: true
+  tags: [sway, sudo]
+
+- name: Compile swayidle
+  command:
+    cmd: sh -c "meson setup build/ && ninja -C build/"
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/swayidle-{{swayidle_version}}
+  tags: [sway]
+
+- name: Install swayidle
+  command:
+    cmd: ninja -C build/ install
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/swayidle-{{swayidle_version}}
+  become: true
+  tags: [sway, sudo]
+
+- name: Install i3status
+  ansible.builtin.apt:
+    name: i3status
+  become: true
+  tags: [sway, sudo]
+
+- name: Download bemenu
+  get_url:
+    url: https://github.com/Cloudef/bemenu/releases/download/{{bemenu_version}}/bemenu-{{bemenu_version}}.tar.gz
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/bemenu-{{bemenu_version}}.tar.gz
+  tags: [sway]
+
+- name: Untar bemenu
+  unarchive:
+    src: /home/{{ ansible_user_id }}/buntuble/downloads/bemenu-{{bemenu_version}}.tar.gz
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/
+  tags: [sway]
+
+- name: Install bemenu dependencies
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - wayland-protocols
+    - libwayland-bin
+    - libwayland-dev
+    - libcairo2-dev
+    - libpango1.0-dev
+    - libxkbcommon-dev
+    - build-essential
+  become: true
+  tags: [sway, sudo]
+
+- name: Compile bemenu
+  command:
+    cmd: make clients wayland PREFIX=/usr
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/bemenu-{{bemenu_version}}
+  tags: [sway]
+
+- name: Install bemenu
+  command:
+    cmd: make install PREFIX=/usr
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/bemenu-{{bemenu_version}}
   become: true
   tags: [sway, sudo]
 
@@ -16,6 +272,61 @@
     name: mako-notifier
     state: absent
   become: true
+  tags: [sway, sudo]
+
+- name: Install mako dependencies
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - libcairo2-dev
+    - libpango1.0-dev
+    - libwayland-dev
+    - wayland-protocols
+    - cmake
+    - libsystemd-dev
+  become: true
+  tags: [sway, sudo]
+
+- name: Get mako
+  get_url:
+    url: https://github.com/emersion/mako/releases/download/v{{mako_version}}/mako-{{mako_version}}.tar.gz
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/mako-{{mako_version}}.tar.gz
+  tags: [sway]
+
+- name: Unpack mako
+  unarchive:
+    src: /home/{{ ansible_user_id }}/buntuble/downloads/mako-{{mako_version}}.tar.gz
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads
+  tags: [sway]
+
+- name: Build mako
+  command: meson build
+  args:
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/mako-{{mako_version}}
+  tags: [sway]
+
+- name: Compile mako
+  command: ninja -C build
+  args:
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/mako-{{mako_version}}
+  tags: [sway]
+
+- name: Create ~/bin
+  file:
+    dest: /home/{{ ansible_user_id }}/bin
+    state: directory
+  tags: [sway]
+
+- name: Copy mako to ~/bin
+  command: mv /home/{{ ansible_user_id }}/buntuble/downloads/mako-{{mako_version}}/build/mako /home/{{ ansible_user_id }}/bin/
+  tags: [sway]
+
+- name: Install xdg-desktop-portal-wlr for screen sharing
+  ansible.builtin.apt:
+    name: xdg-desktop-portal-wlr
+    state: latest
+  become: yes
   tags: [sway, sudo]
 
 - name: Create .config/sway
@@ -55,52 +366,6 @@
     - 10-wayland.conf
   tags: [sway]
 
-- name: Create Download directory
-  file:
-    path: /home/{{ ansible_user_id }}/buntuble/downloads/
-    state: directory
-  tags: [sway]
-
-- name: Download bemenu
-  get_url:
-    url: https://github.com/Cloudef/bemenu/archive/refs/tags/0.6.3.tar.gz
-    dest: /home/{{ ansible_user_id }}/buntuble/downloads/bemenu.tar.gz
-  tags: [sway]
-
-- name: Untar bemenu
-  unarchive:
-    src: /home/{{ ansible_user_id }}/buntuble/downloads/bemenu.tar.gz
-    dest: /home/{{ ansible_user_id }}/buntuble/downloads/
-  tags: [sway]
-
-- name: Install bemenu dependencies
-  ansible.builtin.apt:
-    name: "{{ packages }}"
-  vars:
-    packages:
-    - wayland-protocols
-    - libwayland-bin
-    - libwayland-dev
-    - libcairo2-dev
-    - libpango1.0-dev
-    - libxkbcommon-dev
-    - build-essential
-  become: true
-  tags: [sway, sudo]
-
-- name: Compile bemenu
-  command:
-    cmd: make clients wayland PREFIX=/usr
-    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/bemenu-0.6.3
-  tags: [sway]
-
-- name: Install bemenu
-  command:
-    cmd: make install PREFIX=/usr
-    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/bemenu-0.6.3
-  become: true
-  tags: [sway, sudo]
-
 - name: Set cursor theme
   command: dconf write /org/gnome/desktop/interface/cursor-theme "'DMZ-Black'"
   tags: [sway]
@@ -120,65 +385,3 @@
     line: XDG_CURRENT_DESKTOP="${XDG_CURRENT_DESKTOP:-sway}"
     create: yes
   tags: [sway]
-
-- name: Install mako dependencies
-  ansible.builtin.apt:
-    name: "{{ packages }}"
-  vars:
-    packages:
-    - meson
-    - libcairo2-dev
-    - libpango1.0-dev
-    - libwayland-dev
-    - wayland-protocols
-    - cmake
-    - libsystemd-dev
-  become: true
-  tags: [sway, sudo]
-
-- name: Create Download directory
-  file:
-    path: /home/{{ ansible_user_id }}/buntuble/downloads/
-    state: directory
-  tags: [sway]
-
-- name: Get mako
-  get_url:
-    url: https://github.com/emersion/mako/archive/v1.7.1.tar.gz
-    dest: /home/{{ ansible_user_id }}/buntuble/downloads/mako.tar.gz
-  tags: [sway]
-
-- name: Unpack mako
-  unarchive:
-    src: /home/{{ ansible_user_id }}/buntuble/downloads/mako.tar.gz
-    dest: /home/{{ ansible_user_id }}/buntuble/downloads
-  tags: [sway]
-
-- name: Build mako
-  command: meson build
-  args:
-    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/mako-1.7.1
-  tags: [sway]
-
-- name: Compile mako
-  command: ninja -C build
-  args:
-    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/mako-1.7.1
-  tags: [sway]
-
-- name: Create ~/bin
-  file:
-    dest: /home/{{ ansible_user_id }}/bin
-    state: directory
-  tags: [sway]
-
-- name: Copy mako to ~/bin
-  command: mv /home/{{ ansible_user_id }}/buntuble/downloads/mako-1.7.1/build/mako /home/{{ ansible_user_id }}/bin/
-  tags: [sway]
-
-- name: Install xdg-desktop-portal-wlr for screen sharing
-  ansible.builtin.apt:
-    name: xdg-desktop-portal-wlr
-    state: latest
-  become: yes
-  tags: [sway, sudo]
