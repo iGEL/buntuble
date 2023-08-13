@@ -1,3 +1,9 @@
+- name: Create ~/bin
+  ansible.builtin.file:
+    dest: /home/{{ ansible_user_id }}/bin/
+    state: directory
+  tags: [configure-screens]
+
 - name: Copy configure-screens
   ansible.builtin.copy:
     src: configure-screens
