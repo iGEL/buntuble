@@ -1,5 +1,5 @@
 ---
 docker_compose_version: 1.21.0
-iosevka_version: 1.14.1
+iosevka_version: 26.1.0
 alacritty_version: 0.7.2
 watchexec_version: 1.20.5

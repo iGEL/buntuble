@@ -91,10 +91,8 @@
     url: '{{item.url}}'
     dest: /home/{{ansible_user_id}}/buntuble/downloads/{{item.name}}
   with_items:
-    - url: https://github.com/be5invis/Iosevka/releases/download/v{{iosevka_version}}/01-iosevka-{{iosevka_version}}.zip
+    - url: https://github.com/be5invis/Iosevka/releases/download/v{{iosevka_version}}/super-ttc-iosevka-{{iosevka_version}}.zip
       name: iosevka.zip
-    - url: https://github.com/be5invis/Iosevka/releases/download/v{{iosevka_version}}/02-iosevka-term-{{iosevka_version}}.zip
-      name: iosevka-term.zip
   tags: [alacritty]
 
 - name: Unzip fonts
@@ -103,7 +101,6 @@
     dest: /home/{{ansible_user_id}}/.fonts/
   with_items:
     - iosevka.zip
-    - iosevka-term.zip
   tags: [alacritty]
   notify:
     - Refresh font cache
