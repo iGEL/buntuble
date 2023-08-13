@@ -1,22 +1,16 @@
----
-- name: Install libfuse
-  ansible.builtin.apt:
-    name: libfuse2
-  become: yes
-  tags: [neovim, sudo]
-
 - name: Install lastest stable Neovim
-  ansible.builtin.get_url:
-    url: 'https://github.com/neovim/neovim/releases/download/v0.9.1/nvim.appimage'
-    dest: '/usr/local/bin/nvim.appimage'
-    mode: 755
+  ansible.builtin.unarchive:
+    src: https://github.com/neovim/neovim/releases/download/v0.9.1/nvim-linux64.tar.gz
+    dest: /opt/
+    remote_src: yes
+    creates: /opt/nvim-linux64/bin/nvim
   become: yes
   tags: [neovim, sudo]
 
 - name: Setup alternatives
   alternatives:
     name: "{{item}}"
-    path: /usr/local/bin/nvim.appimage
+    path: /opt/nvim-linux64/bin/nvim
   with_items:
     - vi
   become: yes
@@ -49,7 +43,7 @@
   tags: [neovim]
 
 - name: vim-plug install
-  command: /usr/local/bin/nvim.appimage -u ~/dev/files/nvim/install_vim-plug.vimrc +PlugInstall +qall
+  command: /usr/bin/vi -u ~/dev/files/nvim/install_vim-plug.vimrc +PlugInstall +qall
   tags: [neovim]
 
 - name: Create Download directory
