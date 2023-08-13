@@ -17,14 +17,14 @@
     - rust
     - alacritty
     # - spacemacs
-    - ruby
-    - clojure
+    # - ruby
+    # - clojure
     - docker
     - htop
     - jq
     - ripgrep
       #- openvpn
-    - awscli
+    # - awscli
       #  - terraform
     - psql
     - firefox
