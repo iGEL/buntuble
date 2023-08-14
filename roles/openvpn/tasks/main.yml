@@ -1,7 +1,0 @@
----
-- name: Install openvpn
-  apt:
-    name: openvpn
-    state: latest
-  become: yes
-  tags: [openvpn, sudo]

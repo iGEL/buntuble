@@ -17,7 +17,6 @@
     - neovim
     - rust
     - alacritty
-    # - spacemacs
     # - ruby
     # - clojure
     - docker
@@ -25,11 +24,6 @@
     - jq
     - ripgrep
     - asdf
-      #- openvpn
-    # - awscli
-      #  - terraform
     - psql
     - firefox
-    # - node
-    # - elm
     - pitch
