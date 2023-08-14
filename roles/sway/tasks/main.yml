@@ -340,7 +340,7 @@
     src: /home/{{ ansible_user_id }}/dev/files/sway-config
     dest: /home/{{ ansible_user_id }}/.config/sway/config
     state: link
-  tags: [sway, sudo]
+  tags: [sway]
 
 - name: Add user to video group so he can change the backlight brightness
   user:
