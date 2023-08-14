@@ -3,14 +3,23 @@
   file:
     path: /home/{{ ansible_user_id }}/dev
     state: directory
+  tags: [dotfiles]
 
 - name: Clone the dotfiles directory
   git:
     repo: https://github.com/iGEL/dotfiles.git
     dest: /home/{{ ansible_user_id }}/dev/files
+  tags: [dotfiles]
+
+- name: Fix remote
+  ansible.builtin.command:
+    cmd: git remote set-url origin git@github.com:iGEL/dotfiles.git
+    chdir: /home/{{ ansible_user_id }}/dev/files
+  tags: [dotfiles]
 
 - name: Symlink the dotfiles directory
   file:
     src: /home/{{ ansible_user_id }}/dev/files
     dest: /home/{{ ansible_user_id }}/.dotfiles
     state: link
+  tags: [dotfiles]
