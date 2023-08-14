@@ -6,54 +6,20 @@
   become: true
   tags: [pitch, sudo]
 
-- name: Install Watchexec
+- name: Install python dependencies
   ansible.builtin.apt:
-    deb: 'https://github.com/watchexec/watchexec/releases/download/cli-v{{ watchexec_version }}/watchexec-{{ watchexec_version }}-x86_64-unknown-linux-musl.deb'
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - libxkbfile-dev
+    - libbz2-dev
+    - libreadline-dev
+    - libssl-dev
+    - libncurses5-dev
+    - libsqlite3-dev
+    - tk-dev
   become: true
   tags: [pitch, sudo]
-
-- name: Install asdf
-  ansible.builtin.shell: >
-    git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2
-  args:
-    creates: "{{ ansible_env.HOME }}/.asdf/asdf.sh"
-  tags: [pitch]
-
-- name: Source asdf in ~/.{{ item }}
-  ansible.builtin.lineinfile: >
-      dest=~/.{{ item }}
-      line=". $HOME/.asdf/asdf.sh"
-      create=yes
-  with_items:
-    - zshrc
-  tags: [pitch]
-
-- name: Install nodejs plugin
-  ansible.builtin.shell: >
-    source {{ ansible_env.HOME }}/.asdf/asdf.sh && asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-  args:
-    executable: /bin/bash
-    chdir: "$HOME"
-    creates: "$HOME/.asdf/plugins/nodejs/bin/install"
-  tags: [pitch]
-
-- name: Install node
-  ansible.builtin.shell: |
-    source {{ ansible_env.HOME }}/.asdf/asdf.sh && asdf install nodejs {{item}}
-  args:
-    executable: /bin/bash
-    chdir: "$HOME"
-    creates: "$HOME/.asdf/installs/nodejs/{{item}}/bin/node"
-  loop:
-    - 18.12.1
-  tags: [pitch]
-
-- name: Set default node version
-  ansible.builtin.lineinfile: >
-      dest=~/.tool-versions
-      line="nodejs 18.12.1"
-      create=yes
-  tags: [pitch]
 
 - name: Install yarn
   ansible.builtin.shell: >
@@ -62,12 +28,6 @@
     executable: /bin/bash
     chdir: "$HOME"
   tags: [pitch]
-
-- name: Install Leiningen
-  ansible.builtin.apt:
-    name: leiningen
-  become: true
-  tags: [pitch, sudo]
 
 - name: Install pip
   ansible.builtin.apt:

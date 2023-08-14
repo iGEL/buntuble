@@ -1,0 +1,47 @@
+---
+- name: Install asdf
+  ansible.builtin.shell: >
+    git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v{{asdf_version}}
+  args:
+    creates: "{{ ansible_env.HOME }}/.asdf/asdf.sh"
+  tags: [asdf]
+
+- name: Source asdf in ~/.{{ item }}
+  ansible.builtin.lineinfile: >
+      dest=~/.{{ item }}
+      line="[ -f ~/.asdf/asdf.sh ] && . $HOME/.asdf/asdf.sh"
+      create=yes
+  with_items:
+    - zshrc
+  tags: [asdf]
+
+- name: Install nodejs plugin
+  ansible.builtin.shell: >
+    source {{ ansible_env.HOME }}/.asdf/asdf.sh && asdf plugin add {{item.plugin}} {{item.url}}
+  args:
+    executable: /bin/bash
+    chdir: "$HOME"
+    creates: "$HOME/.asdf/plugins/{{item.plugin}}/bin/install"
+  with_items:
+    - plugin: nodejs
+      url: https://github.com/asdf-vm/asdf-nodejs.git
+    - plugin: clojure
+      url: https://github.com/asdf-community/asdf-clojure.git
+    - plugin: java
+      url: https://github.com/halcyon/asdf-java.git
+  tags: [asdf]
+
+- name: Link ~/.tool-versions
+  ansible.builtin.file:
+    src: /home/{{ ansible_user_id }}/dev/files/tool-versions
+    dest: /home/{{ ansible_user_id }}/.tool-versions
+    state: link
+  tags: [asdf]
+
+- name: Install default tools
+  ansible.builtin.shell: |
+    source {{ ansible_env.HOME }}/.asdf/asdf.sh && asdf install
+  args:
+    executable: /bin/bash
+    chdir: "$HOME"
+  tags: [asdf]

@@ -23,6 +23,7 @@
     - htop
     - jq
     - ripgrep
+    - asdf
       #- openvpn
     # - awscli
       #  - terraform
