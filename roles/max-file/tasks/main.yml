@@ -1,0 +1,8 @@
+---
+- name: Set soft file limit
+  ansible.builtin.lineinfile: >
+      dest=/etc/security/limits.conf
+      line="{{ ansible_user_id }} soft nofile 100000"
+      create=yes
+  become: true
+  tags: [max-file, sudo]
