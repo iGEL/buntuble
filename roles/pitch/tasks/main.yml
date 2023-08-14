@@ -36,6 +36,7 @@
   tags: [pitch, sudo]
 
 - name: Install yawsso
-  ansible.builtin.pip:
-    name: yawsso==0.6.2
-  tags: [pitch]
+  ansible.builtin.command:
+    cmd: sh -c "PIPX_HOME=/opt/pipx PIPX_BIN_DIR=/usr/local/bin pipx install yawsso"
+  become: true
+  tags: [pitch, sudo]
