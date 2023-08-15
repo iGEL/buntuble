@@ -322,11 +322,48 @@
   command: mv /home/{{ ansible_user_id }}/buntuble/downloads/mako-{{mako_version}}/build/mako /home/{{ ansible_user_id }}/bin/
   tags: [sway]
 
-- name: Install xdg-desktop-portal-wlr for screen sharing
+- name: Uninstall xdg-desktop-portal-wlr apt package
   ansible.builtin.apt:
     name: xdg-desktop-portal-wlr
-    state: latest
+    state: absent
   become: yes
+  tags: [sway, sudo]
+
+- name: Download xdg-desktop-portal-wlr
+  get_url:
+    url: https://github.com/emersion/xdg-desktop-portal-wlr/releases/download/v{{xdg_desktop_portal_version}}/xdg-desktop-portal-wlr-{{xdg_desktop_portal_version}}.tar.gz
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/xdg-desktop-portal-wlr-{{xdg_desktop_portal_version}}.tar.gz
+  tags: [sway]
+
+- name: Untar xdg-desktop-portal-wlr
+  unarchive:
+    src: /home/{{ ansible_user_id }}/buntuble/downloads/xdg-desktop-portal-wlr-{{xdg_desktop_portal_version}}.tar.gz
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/
+  tags: [sway]
+
+- name: Install xdg-desktop-portal-wlr dependencies
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - libpipewire-0.3-dev
+    - libinih-dev
+    - xdg-desktop-portal
+    - xdg-desktop-portal-dev
+  become: true
+  tags: [sway, sudo]
+
+- name: Compile xdg-desktop-portal-wlr
+  command:
+    cmd: sh -c "meson setup build/ && ninja -C build/"
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/xdg-desktop-portal-wlr-{{xdg_desktop_portal_version}}
+  tags: [sway]
+
+- name: Install xdg-desktop-portal-wlr
+  command:
+    cmd: sh -c "ninja -C build install && ln -sf /usr/local/libexec/xdg-desktop-portal-wlr /usr/libexec/ && mkdir -p /usr/share/xdg-desktop-portal/portals/ && ln -sf /usr/local/share/xdg-desktop-portal/portals/wlr.portal /usr/share/xdg-desktop-portal/portals/"
+    chdir: /home/{{ ansible_user_id }}/buntuble/downloads/xdg-desktop-portal-wlr-{{xdg_desktop_portal_version}}
+  become: true
   tags: [sway, sudo]
 
 - name: Create .config/sway
