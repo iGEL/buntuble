@@ -1,8 +1,15 @@
 ---
 - name: Set soft file limit
-  ansible.builtin.lineinfile: >
-      dest=/etc/security/limits.conf
-      line="{{ ansible_user_id }} soft nofile 100000"
-      create=yes
+  ansible.builtin.lineinfile:
+    dest: /etc/security/limits.conf
+    line: "{{ ansible_user_id }} soft nofile 100000"
+    create: yes
+  become: true
+  tags: [max-file, sudo]
+
+- name: Set max_user_instances
+  ansible.builtin.lineinfile:
+    dest: /etc/sysctl.conf
+    line: "fs.inotify.max_user_instances = 256"
   become: true
   tags: [max-file, sudo]
