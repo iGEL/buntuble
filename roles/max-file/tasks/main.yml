@@ -10,6 +10,6 @@
 - name: Set max_user_instances
   ansible.builtin.lineinfile:
     dest: /etc/sysctl.conf
-    line: "fs.inotify.max_user_instances = 256"
+    line: "fs.inotify.max_user_instances = 1024"
   become: true
   tags: [max-file, sudo]
