@@ -22,6 +22,13 @@
   become: true
   tags: [docker, sudo]
 
+- name: Configure network not not collide with the Deutsche Bahn Wifi
+  ansible.builtin.copy:
+    content: '{"default-address-pools":[{"base":"172.19.0.0/16","size":24}]}'
+    dest: /etc/docker/daemon.json
+  become: true
+  tags: [docker, sudo]
+
 - name: Install Docker Compose
   get_url:
     url: https://github.com/docker/compose/releases/download/1.29.1/docker-compose-Linux-x86_64
