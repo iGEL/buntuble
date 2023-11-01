@@ -1,0 +1,7 @@
+---
+- name: Install libfuse2
+  apt:
+    name: libfuse2
+    state: latest
+  become: yes
+  tags: [appimage, sudo]
