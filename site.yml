@@ -17,6 +17,7 @@
     - neovim
     - rust
     - alacritty
+    - appimage
     # - ruby
     # - clojure
     - docker
