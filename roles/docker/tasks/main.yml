@@ -22,9 +22,9 @@
   become: true
   tags: [docker, sudo]
 
-- name: Configure network not not collide with the Deutsche Bahn Wifi
+- name: Configure network to not collide with the Deutsche Bahn Wifi
   ansible.builtin.copy:
-    content: '{"default-address-pools":[{"base":"172.19.0.0/16","size":24}]}'
+    content: '{"default-address-pools":[{"base":"172.30.0.0/16","size":24}]}'
     dest: /etc/docker/daemon.json
   become: true
   tags: [docker, sudo]
