@@ -17,6 +17,10 @@
       value: simple
     - key: commit.gpgsign
       value: true
+    - key: gpg.format
+      value: ssh
+    - key: user.signingKey
+      value: ~/.ssh/id_ed25519.pub
     - key: core.editor
       value: vi
     - key: rebase.autosquash
