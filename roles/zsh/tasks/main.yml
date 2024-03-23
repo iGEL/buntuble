@@ -6,6 +6,12 @@
   become: yes
   tags: [zsh, sudo]
 
+- name: Install better autocomplete
+  ansible.builtin.git:
+    repo: https://github.com/marlonrichert/zsh-autocomplete.git
+    dest: /home/{{ ansible_user_id }}/buntuble/downloads/zsh-autocomplete/
+  tags: [zsh]
+
 - name: Set Zsh as default for the current user
   command: chsh -s /bin/zsh {{ ansible_user_id }}
   become: yes
