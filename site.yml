@@ -21,7 +21,7 @@
     # - ruby
     # - clojure
     - docker
-    - htop
+    - btop
     - jq
     - ripgrep
     - asdf

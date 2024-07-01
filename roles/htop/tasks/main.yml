@@ -1,7 +1,0 @@
----
-- name: Install htop
-  apt:
-    name: htop
-    state: latest
-  become: yes
-  tags: [htop, sudo]

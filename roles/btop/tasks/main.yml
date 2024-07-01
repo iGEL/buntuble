@@ -1,0 +1,7 @@
+---
+- name: Install btop
+  apt:
+    name: btop
+    state: latest
+  become: yes
+  tags: [btop, sudo]
