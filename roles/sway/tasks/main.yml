@@ -103,7 +103,7 @@
 
 - name: Compile wlroots
   command:
-    cmd: sh -c "meson setup build/ && ninja -C build/"
+    cmd: sh -c "meson setup build/ -Dexamples=false && ninja -C build/"
     chdir: /home/{{ ansible_user_id }}/buntuble/downloads/wlroots-{{wlroots_version}}
   tags: [sway]
 
