@@ -91,7 +91,7 @@
     url: '{{item.url}}'
     dest: /home/{{ansible_user_id}}/buntuble/downloads/{{item.name}}
   with_items:
-    - url: https://github.com/be5invis/Iosevka/releases/download/v{{iosevka_version}}/super-ttc-iosevka-{{iosevka_version}}.zip
+    - url: https://github.com/be5invis/Iosevka/releases/download/v{{iosevka_version}}/SuperTTC-Iosevka-{{iosevka_version}}.zip
       name: iosevka.zip
   tags: [alacritty]
 

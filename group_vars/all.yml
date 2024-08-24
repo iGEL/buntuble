@@ -1,8 +1,8 @@
 ---
-alacritty_version: 0.12.2
+alacritty_version: 0.13.2
 asdf_version: 0.12.0
 bemenu_version: 0.6.23
-iosevka_version: 26.1.0
+iosevka_version: 31.3.0
 mako_version: 1.9.0
 seatd_version: 0.8.0
 sway_version: 1.9
