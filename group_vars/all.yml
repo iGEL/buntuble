@@ -2,13 +2,11 @@
 alacritty_version: 0.12.2
 asdf_version: 0.12.0
 bemenu_version: 0.6.15
-docker_compose_version: 1.21.0
 iosevka_version: 26.1.0
 mako_version: 1.8.0
 seatd_version: 0.8.0
 sway_version: 1.8.1
 swayidle_version: 1.8.0
 swaylock_version: 1.7.2
-watchexec_version: 1.20.5
 wlroots_version: 0.16.2
 xdg_desktop_portal_version: 0.7.0
