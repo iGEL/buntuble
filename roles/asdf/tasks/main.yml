@@ -15,7 +15,7 @@
     - zshrc
   tags: [asdf]
 
-- name: Install nodejs plugin
+- name: Install plugins
   ansible.builtin.shell: >
     source {{ ansible_env.HOME }}/.asdf/asdf.sh && asdf plugin add {{item.plugin}} {{item.url}}
   args:
@@ -29,6 +29,11 @@
       url: https://github.com/asdf-community/asdf-clojure.git
     - plugin: java
       url: https://github.com/halcyon/asdf-java.git
+    - plugin: babashka
+      url: https://github.com/pitch-io/asdf-babashka.git
+    - plugin: jq
+      url: https://github.com/pitch-io/asdf-jq.git
+
   tags: [asdf]
 
 - name: Link ~/.tool-versions
