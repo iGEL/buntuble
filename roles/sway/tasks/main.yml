@@ -98,6 +98,7 @@
     - libx11-xcb-dev
     - libxcb-dri3-dev
     - libxcb-res0-dev
+    - libdisplay-info-dev
   become: true
   tags: [sway, sudo]
 
