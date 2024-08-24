@@ -1,9 +1,6 @@
 ---
 - name: Install ripgrep
-  command: snap install ripgrep  --classic
-  become: yes
-  tags: [sudo, ripgrep]
-- name: Aliasing rg
-  command: snap alias ripgrep.rg rg
-  become: yes
+  ansible.builtin.apt:
+    name: curl
+    state: latest
   tags: [sudo, ripgrep]
