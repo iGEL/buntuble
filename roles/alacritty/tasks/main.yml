@@ -67,8 +67,8 @@
 
 - name: symlink the config file
   file:
-    src: /home/{{ ansible_user_id }}/dev/files/alacritty.yml
-    dest: /home/{{ ansible_user_id }}/.config/alacritty/alacritty.yml
+    src: /home/{{ ansible_user_id }}/dev/files/alacritty.toml
+    dest: /home/{{ ansible_user_id }}/.config/alacritty/alacritty.toml
     state: link
   tags: [alacritty]
 

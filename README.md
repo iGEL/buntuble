@@ -3,7 +3,7 @@ buntuble
 
 Ansible scripts to setup my dev machine.
 
-As of August 2023 I'm running Ubuntu 23.04 and Ansible 2.14.2.
+As of August 2024 I'm running Mint Cinnamon 22 and Ansible 2.16.3. Before August 2024 I used Ubuntu.
 
 Installation
 ------------
@@ -34,7 +34,7 @@ ansible-playbook -i inventory site.yml --skip-tags=sudo
 License (MIT)
 -------------
 
-Copyright (C) 2014-23 Johannes Barre
+Copyright (C) 2014-24 Johannes Barre
 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
