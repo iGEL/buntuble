@@ -1,33 +1,50 @@
-#!/usr/bin/env ruby
-# frozen_string_literal: true
+#!/usr/bin/env python3
 
-require "json"
+import json
+import subprocess
 
-def set_screen(screen, mode: nil, pos: nil, scale: nil)
-  cmd = "swaymsg output #{screen}"
-  cmd += " mode #{mode}" if mode
-  cmd += " pos #{pos}" if pos
-  cmd += " scale #{scale}" if scale
-  system(cmd)
-end
+def run_command(command):
+    """Run a shell command and return the output."""
+    return subprocess.check_output(command, shell=True, text=True).strip()
 
-def set_keybinding(primary:, secondary:)
-  system("swaymsg bindsym Mod4+w move workspace to output #{primary}")
-  system("swaymsg bindsym Mod4+e move workspace to output #{secondary}")
-end
+def set_screen(screen, mode=None, pos=None, scale=None):
+    """Configure screen settings using swaymsg."""
+    cmd = f"swaymsg output {screen}"
+    if mode:
+        cmd += f" mode {mode}"
+    if pos:
+        cmd += f" pos {pos}"
+    if scale:
+        cmd += f" scale {scale}"
+    subprocess.run(cmd, shell=True)
 
-outputs = JSON.parse(`swaymsg -t get_outputs`)
+def set_keybinding(primary, secondary):
+    """Set keybindings for moving workspaces between outputs."""
+    subprocess.run(f"swaymsg bindsym Mod4+w move workspace to output {primary}", shell=True)
+    subprocess.run(f"swaymsg bindsym Mod4+e move workspace to output {secondary}", shell=True)
 
-exit if outputs.count == 1
+def main():
+    # Get output information from sway
+    outputs = json.loads(run_command("swaymsg -t get_outputs"))
 
-external_monitor = outputs.reject { |output| output["name"] == "eDP-1" }.first
+    # Exit if only one output is detected
+    if len(outputs) == 1:
+        return
 
-if external_monitor["model"] == "U28E590"
-  set_screen(external_monitor["name"], mode: "3840x2160", pos: "0 0", scale: "1.75")
-  set_screen("eDP-1", pos: "960 2160")
-else
-  set_screen("eDP-1", pos: "0 0")
-  set_screen(external_monitor["name"], pos: "1920 0")
-end
-set_keybinding(primary: external_monitor["name"], secondary: "eDP-1")
+    # Identify external monitor (exclude eDP-1)
+    external_monitor = next(output for output in outputs if output["name"] != "eDP-1")
+
+    # Configure screens based on the external monitor model
+    if external_monitor["model"] == "U28E590":
+        set_screen(external_monitor["name"], mode="3840x2160", pos="0 0", scale="1.75")
+        set_screen("eDP-1", pos="960 2160")
+    else:
+        set_screen("eDP-1", pos="0 0")
+        set_screen(external_monitor["name"], pos="1920 0")
+
+    # Set keybindings for workspace movement
+    set_keybinding(primary=external_monitor["name"], secondary="eDP-1")
+
+if __name__ == "__main__":
+    main()
 
