@@ -5,6 +5,7 @@
   roles:
     - test-sudo
     - git
+    - ssh
     - dotfiles
     - max-file
     - curl

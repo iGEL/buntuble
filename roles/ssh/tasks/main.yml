@@ -1,0 +1,26 @@
+---
+- name: Copy .ssh/config
+  ansible.builtin.copy:
+    src: ssh-config
+    dest: /home/{{ ansible_user_id }}/.ssh/config
+  tags: [ssh]
+
+- name: Create .config/systemd
+  ansible.builtin.file:
+    path: /home/{{ ansible_user_id }}/.config/systemd/user
+    state: directory
+  tags: [ssh]
+
+- name: Configure ssh-agent
+  ansible.builtin.copy:
+    src: ssh-agent.service
+    dest: /home/{{ ansible_user_id }}/.config/systemd/user/ssh-agent.service
+  tags: [ssh]
+
+- name: Enable ssh-agent
+  ansible.builtin.systemd_service:
+    name: ssh-agent
+    scope: user
+    enabled: true
+    state: started
+  tags: [ssh]
