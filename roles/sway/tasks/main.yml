@@ -99,6 +99,7 @@
     - libxcb-dri3-dev
     - libxcb-res0-dev
     - libdisplay-info-dev
+    - libxcb-ewmh-dev
     - libxcb-present-dev
     - libxcb-render-util0-dev
   become: true
