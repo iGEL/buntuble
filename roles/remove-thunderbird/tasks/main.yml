@@ -1,0 +1,7 @@
+---
+- name: Uninstall thunderbird
+  ansible.builtin.apt:
+    name: thunderbird
+    state: absent
+  become: true
+  tags: [thunderbird, sudo]
