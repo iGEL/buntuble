@@ -4,7 +4,7 @@
     name: ntp
     state: latest
   become: yes
-  tags: [ntp, sudo]
+  tags: [time, sudo]
 
 - name: Configure ntp
   copy:
@@ -12,4 +12,11 @@
     dest: /etc/ntp.conf
   become: yes
   notify: restart ntp
-  tags: [ntp, sudo]
+  tags: [time, sudo]
+
+- name: Set the hardware clock to UTC
+  copy:
+    src: adjtime
+    dest: /etc/adjtime
+  become: yes
+  tags: [time, sudo]

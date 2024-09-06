@@ -13,7 +13,7 @@
     - workman
     - sway
     - configure-screens
-    - ntp
+    - time
     - zsh
     - neovim
     - rust
