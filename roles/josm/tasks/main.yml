@@ -1,0 +1,26 @@
+---
+- name: Add josm to sources
+  ansible.builtin.command:
+    cmd: sh -c "echo \"deb [signed-by=/usr/local/share/keyrings/josm-apt.gpg] https://josm.openstreetmap.de/apt $(grep ^DISTRIB_CODENAME= /etc/upstream-release/lsb-release| awk -F = '{print $(2)}') universe\" > /etc/apt/sources.list.d/josm.list"
+  become: true
+  tags: [josm, sudo]
+
+- name: Create /usr/local/share/keyrings
+  file:
+    dest: /usr/local/share/keyrings
+    state: directory
+  become: true
+  tags: [josm, sudo]
+
+- name: Add the josm key
+  ansible.builtin.command:
+    cmd: sh -c 'wget -q https://josm.openstreetmap.de/josm-apt.key -O- | gpg --dearmor -o /usr/local/share/keyrings/josm-apt.gpg'
+  become: true
+  tags: [josm, sudo]
+
+- name: Install josm
+  ansible.builtin.apt:
+    name: josm
+    state: latest
+  become: true
+  tags: [josm, sudo]
