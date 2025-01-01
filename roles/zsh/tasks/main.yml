@@ -10,6 +10,7 @@
   ansible.builtin.git:
     repo: https://github.com/marlonrichert/zsh-autocomplete.git
     dest: /home/{{ ansible_user_id }}/buntuble/downloads/zsh-autocomplete/
+    version: 24.09.04
   tags: [zsh]
 
 - name: Set Zsh as default for the current user
