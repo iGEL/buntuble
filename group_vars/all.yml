@@ -1,12 +1,12 @@
 ---
-alacritty_version: 0.13.2
-asdf_version: 0.14.1
+alacritty_version: 0.14.0
+asdf_version: 0.15.0
 bemenu_version: 0.6.23
-iosevka_version: 31.3.0
+iosevka_version: 32.3.1
 mako_version: 1.9.0
-seatd_version: 0.8.0
+seatd_version: 0.9.1
 sway_version: 1.9
 swayidle_version: 1.8.0
-swaylock_version: 1.7.2
+swaylock_version: 1.8.0
 wlroots_version: 0.17.4
 xdg_desktop_portal_version: 0.7.1
