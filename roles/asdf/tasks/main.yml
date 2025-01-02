@@ -15,6 +15,16 @@
     - zshrc
   tags: [asdf]
 
+- name: Install plugin dependencies
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - libedit-dev
+    - libssl-dev
+  become: true
+  tags: [asdf, sudo]
+
 - name: Install plugins
   ansible.builtin.shell: >
     source {{ ansible_env.HOME }}/.asdf/asdf.sh && asdf plugin add {{item.plugin}} {{item.url}}
@@ -33,6 +43,8 @@
       url: https://github.com/pitch-io/asdf-babashka.git
     - plugin: jq
       url: https://github.com/pitch-io/asdf-jq.git
+    - plugin: python
+      url: https://github.com/asdf-community/asdf-python
 
   tags: [asdf]
 
