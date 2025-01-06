@@ -1,6 +1,7 @@
 ---
 - name: Install ripgrep
   ansible.builtin.apt:
-    name: curl
+    name: ripgrep
     state: latest
+  become: true
   tags: [sudo, ripgrep]
