@@ -20,7 +20,7 @@
     - alacritty
     - appimage
     # - ruby
-    # - clojure
+    - clojure
     - docker
     - btop
     - jq
