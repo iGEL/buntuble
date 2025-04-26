@@ -157,6 +157,12 @@
   become: true
   tags: [sway, sudo]
 
+- name: Copy sway.desktop
+  command:
+    cmd: cp /home/{{ ansible_user_id }}/buntuble/downloads/sway-{{sway_version}}/sway.desktop /usr/share/wayland-sessions/sway.desktop
+  become: true
+  tags: [sway, sudo]
+
 - name: Download swaylock
   get_url:
     url: https://github.com/swaywm/swaylock/releases/download/v{{swaylock_version}}/swaylock-{{swaylock_version}}.tar.gz
