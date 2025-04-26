@@ -1,16 +1,16 @@
 - name: Install lastest stable Neovim
   ansible.builtin.unarchive:
-    src: https://github.com/neovim/neovim/releases/download/v0.9.1/nvim-linux64.tar.gz
+    src: https://github.com/neovim/neovim/releases/download/v0.11.0/nvim-linux-x86_64.tar.gz
     dest: /opt/
     remote_src: yes
-    creates: /opt/nvim-linux64/bin/nvim
+    creates: /opt/nvim-linux-x86_64/bin/nvim
   become: yes
   tags: [neovim, sudo]
 
 - name: Setup alternatives
   alternatives:
     name: "{{item}}"
-    path: /opt/nvim-linux64/bin/nvim
+    path: /opt/nvim-linux-x86_64/bin/nvim
   with_items:
     - vi
   become: yes
