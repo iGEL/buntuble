@@ -80,6 +80,12 @@
   become: yes
   tags: [alacritty, sudo]
 
+- name: Check out themes
+  ansible.builtin.git:
+    repo: 'https://github.com/alacritty/alacritty-theme'
+    dest: /home/{{ansible_user_id}}/.config/alacritty/themes
+  tags: [alacritty]
+
 - name: Create font directory
   file:
     dest: /home/{{ansible_user_id}}/.fonts
