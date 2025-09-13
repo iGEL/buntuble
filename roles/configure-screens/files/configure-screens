@@ -35,7 +35,10 @@ def main():
     external_monitor = next(output for output in outputs if output["name"] != "eDP-1")
 
     # Configure screens based on the external monitor model
-    if external_monitor["model"] == "U28E590" or external_monitor["model"] == "LG UltraFine":
+    if external_monitor["model"] == "Smart M70D":
+        set_screen(external_monitor["name"], mode="3840x2160", pos="0 0", scale="1.5")
+        set_screen("eDP-1", pos="960 2160")
+    elif external_monitor["model"] == "U28E590" or external_monitor["model"] == "LG UltraFine":
         set_screen(external_monitor["name"], mode="3840x2160", pos="0 0", scale="1.75")
         set_screen("eDP-1", pos="960 2160")
     else:
